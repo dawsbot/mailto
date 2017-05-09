@@ -8,6 +8,11 @@ Mailto
 
 [![Build Status][travis-image]][travis-url]
 
+![demo](demo.gif)
+
+Build using [next](https://github.com/zeit/next.js/) and deployed with [now](https://zeit.co/now)
+
+
 ## License
 
 MIT © [Dawson Botsford](http://dawsonbotsford.com)
