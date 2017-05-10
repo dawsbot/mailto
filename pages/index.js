@@ -35,27 +35,35 @@ export default class MailTo extends React.Component {
     return this.parameters.map(param => (
       <div key={param}>
         <label>{param}: </label>
-        <input
-          type="text"
-          value={this.state.value}
-          onChange={e => this.handleChange(e, param)}
-        />
+        {param === 'body'
+          ? <textarea
+              value={this.state.value}
+              onChange={e => this.handleChange(e, param)}
+              className="param-input"
+            />
+          : <input
+              type="text"
+              value={this.state.value}
+              onChange={e => this.handleChange(e, param)}
+              className="param-input"
+            />}
         <style jsx>{`
           label {
             padding-right: 8px;
             font-size: 14px;
           }
-          input {
+          .param-input {
             margin-bottom: 20px;
             border: none;
             border-bottom: solid 2px #c9c9c9;
             outline: none;
             font-family: 'Coming Soon', cursive;
             font-size: 16px;
+            height: 24px;
             width: 100%;
             transition: border .3s;
           }
-          input:focus {
+          .param-input:focus {
             transition: border 1s;
             border-color: black;
           }
