@@ -75,7 +75,6 @@ export default class MailTo extends React.Component {
 
   render() {
     const Mailto = this.buildMailto();
-    const { copyDirtied } = this.state;
     return (
       <Layout>
         <h1>Welcome To Mailto 💌⚡️</h1>
