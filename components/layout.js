@@ -9,7 +9,7 @@ export default ({ children }) => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <style>{`
         body {
-          margin: 80px 20px;
+          margin: 70px 20px;
           font-family: 'Coming Soon', cursive;
         }
       `}</style>
@@ -20,8 +20,8 @@ export default ({ children }) => (
       <GHCorner
         href="https://github.com/dawsbot/mailto"
         bannerColor="#FD6C6C"
-        height="100px"
-        width="100px"
+        height="80px"
+        width="80px"
       />
     </Head>
     <div className="notbody">

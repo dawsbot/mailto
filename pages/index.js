@@ -86,7 +86,7 @@ export default class MailTo extends React.Component {
         </div>
         <h1>Use It</h1>
         <div className="center">
-          <Button href={Mailto} />
+          <Button href={Mailto} text="Test Email" />
         </div>
         <br />
         <div>

@@ -1,4 +1,5 @@
 import copy from 'copy-to-clipboard';
+import Button from './button';
 
 export default class ClickToCopy extends React.Component {
   constructor() {
@@ -23,8 +24,8 @@ export default class ClickToCopy extends React.Component {
     const { copied } = this.state;
     return (
       <span className={'copyElem ' + copied}>
-        <span className="copyBtn" onClick={() => this.copyNow(target)}>
-          {copied ? 'copied!' : 'copy'}
+        <span onClick={() => this.copyNow(target)}>
+          <Button text={copied ? 'copied 👌' : 'copy'} />
         </span>
         {children}
         <style jsx>{`
