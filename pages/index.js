@@ -37,6 +37,7 @@ export default class MailTo extends React.Component {
         <label>{param}: </label>
         {param === 'body'
           ? <textarea
+              rows={5}
               value={this.state.value}
               onChange={e => this.handleChange(e, param)}
               className="param-input"
