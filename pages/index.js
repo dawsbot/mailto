@@ -37,7 +37,7 @@ export default class MailTo extends React.Component {
         <label>{param}: </label>
         {param === 'body'
           ? <textarea
-              rows={5}
+              rows={3}
               value={this.state.value}
               onChange={e => this.handleChange(e, param)}
               className="param-input"
@@ -63,6 +63,9 @@ export default class MailTo extends React.Component {
             height: 24px;
             width: 100%;
             transition: border .3s;
+          }
+          textarea.param-input {
+            height: auto; 
           }
           .param-input:focus {
             transition: border 1s;
