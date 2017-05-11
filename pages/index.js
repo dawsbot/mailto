@@ -79,7 +79,7 @@ export default class MailTo extends React.Component {
       <Layout>
         <h1>Welcome To Mailto 💌⚡️</h1>
         <p className="description">
-          // HTML <code>mailto</code>'s made easy 👌
+          HTML <code>mailto</code>'s made easy 👌
         </p>
         <div className="inputs">
           {this.buildInputs()}
