@@ -2,18 +2,15 @@ import copy from 'copy-to-clipboard';
 import Button from './button';
 
 export default class ClickToCopy extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      copied: false
-    };
-  }
-  copyNow(t) {
+  state = {
+    copied: false
+  };
+  copyNow = t => {
     copy(t);
     this.setState({
       copied: true
     });
-  }
+  };
   componentWillReceiveProps() {
     this.setState({
       copied: false

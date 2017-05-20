@@ -122,6 +122,9 @@ export default class MailTo extends React.Component {
           .description {
             margin-top: 0px;
           }
+          code {
+            word-wrap: break-word;
+          }
         `}</style>
       </Layout>
     );
