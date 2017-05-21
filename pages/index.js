@@ -1,5 +1,6 @@
 import Layout from '../components/layout';
 import Button from '../components/button';
+import ClickToCopy from '../components/clickToCopy';
 
 export default class MailTo extends React.Component {
   parameters = ['to', 'cc', 'bcc', 'subject', 'body'];
@@ -78,25 +79,35 @@ export default class MailTo extends React.Component {
       <Layout>
         <h1>Welcome To Mailto 💌⚡️</h1>
         <p className="description">
-          HTML <code>mailto</code>'s made easy️ 👌
+          HTML <code>mailto</code>'s made easy 👌
         </p>
         <div className="inputs">
           {this.buildInputs()}
         </div>
         <h1>Use It</h1>
         <div className="center">
-          <Button href={Mailto} />
+          <Button href={Mailto} text="Test Email" />
         </div>
         <br />
-        html href: "<code>
-          {Mailto}
-        </code>"
+        <div>
+          HTML href:
+          <ClickToCopy target={Mailto}>
+            <br />
+            <code>
+              {Mailto}
+            </code>
+          </ClickToCopy>
+        </div>
         <br />
-        Full HTML string: <code>
-          {`
-          <a href="${Mailto}">Email me</a>
-        `}
-        </code>
+        <div>
+          Full HTML string:
+          <ClickToCopy target={`<a href="${Mailto}">Mail Now</a>`}>
+            <br />
+            <code>
+              {`<a href="${Mailto}">Mail Now</a>`}
+            </code>
+          </ClickToCopy>
+        </div>
         <style jsx>{`
           .center {
             text-align: center
@@ -110,6 +121,9 @@ export default class MailTo extends React.Component {
           }
           .description {
             margin-top: 0px;
+          }
+          code {
+            word-wrap: break-word;
           }
         `}</style>
       </Layout>
