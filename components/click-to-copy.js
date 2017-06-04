@@ -16,14 +16,22 @@ export default class ClickToCopy extends React.Component {
       copied: false
     });
   }
+  getValue() {
+    return this.state.copied ? 'Copied 👌' : 'Copy to clipboard';
+  }
   render() {
-    const { target, children } = this.props;
+    const { target, children, ariaLabelSuffix, ...rest } = this.props;
     const { copied } = this.state;
+    const value = this.getValue(copied);
+    const ariaLabel = `${value} ${ariaLabelSuffix}`;
     return (
       <span className={'copyElem ' + copied}>
-        <span onClick={() => this.copyNow(target)}>
-          <Button text={copied ? 'copied 👌' : 'copy'} />
-        </span>
+        <Button
+          onClick={() => this.copyNow(target)}
+          value={value}
+          aria-label={ariaLabel}
+          {...rest}
+        />
         {children}
         <style jsx>{`
             .copyElem.true{
