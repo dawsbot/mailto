@@ -1,5 +1,4 @@
 import Layout from '../components/layout';
-import Button from '../components/button';
 import ClickToCopy from '../components/click-to-copy';
 
 export default class MailTo extends React.Component {
@@ -98,11 +97,17 @@ export default class MailTo extends React.Component {
         </div>
         <h1>Use It</h1>
         <div className="center">
-          <a href={Mailto} target="_blank">
-            <Button
+          <a
+            className="button-link"
+            href={Mailto}
+            target="_blank"
+            aria-label="Open a test email in your default mail client"
+          >
+            Test Email
+            {/*<Button
               value="Test Email"
               aria-label="Open a test email in your default mail client"
-            />
+            />*/}
           </a>
         </div>
         <br />
@@ -147,6 +152,25 @@ export default class MailTo extends React.Component {
           }
           code {
             word-wrap: break-word;
+          }
+          .button-link {
+            margin: 0px 8px;
+            background-color: #FD6C6C;
+            color: white;
+            border-width: 0px;
+            border-radius: 3px;
+            padding: 3px 15px;
+            cursor: pointer;
+            font-family: 'Coming Soon', cursive;
+            font-size: 14px;
+            transition: box-shadow  0.2s ease-in-out;
+            outline: none;
+            text-transform: capitalize;
+            max-height: 27px;
+            line-height: 27px;
+          }
+          .button-link:hover {
+            box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
           }
         `}</style>
       </Layout>
