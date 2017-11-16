@@ -8,9 +8,25 @@ Mailto
 
 [![Build Status][travis-image]][travis-url]
 
-![demo](demo.gif)
+Engage website visitors with complex email templates. Use `mailto` for creating emails like this:
+
+![demo](media/complex-mailto.gif)
+
+## Demo
+
+Here's what the web app looks like in action:
+
+![demo](media/demo.gif)
+
+After you've entered email information, copy the generated `href` to your clipboard. Anywhere you use that address will automagically create an email with the information preformatted.
 
 Build using [next](https://github.com/zeit/next.js/) and deployed with [now](https://zeit.co/now)
+
+## FAQ
+
+Q: What is `mailto`?
+
+A: The mailto protocol lets you create hyperlinks that will directly launch the default email software and compose a new email message. Read more [here](https://www.labnol.org/internet/email/learn-mailto-syntax/6748/).
 
 
 ## License
