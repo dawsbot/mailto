@@ -5,6 +5,9 @@
   "repository": "https://github.com/dawsbot",
   "author": "Dawson Botsford",
   "license": "MIT",
+  "engines": {
+    "node": "10"
+  },
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -14,9 +17,9 @@
   },
   "dependencies": {
     "copy-to-clipboard": "^3.0.8",
-    "next": "^2.3.0-alpha1",
-    "react": "15",
-    "react-dom": "15",
+    "next": "^7.0.2",
+    "react": "16.6.3",
+    "react-dom": "16.6.3",
     "react-github-corner": "^2.3.0"
   },
   "devDependencies": {
