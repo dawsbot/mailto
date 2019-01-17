@@ -4,9 +4,7 @@ import GHCorner from 'react-github-corner';
 export default ({ children }) => (
   <div>
     <Head>
-      <title>
-        HTML mailto's made easy️
-      </title>
+      <title>{`HTML mailto's made easy️`}</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link
