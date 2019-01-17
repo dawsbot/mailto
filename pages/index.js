@@ -1,14 +1,14 @@
 import Layout from '../components/layout';
 import ClickToCopy from '../components/click-to-copy';
 
-export default class MailTo extends React.Component {
-  parameters = ['to', 'cc', 'bcc', 'subject', 'body'];
+const parameters = ['to', 'cc', 'bcc', 'subject', 'body'];
 
+export default class MailTo extends React.Component {
   // initialize state to object with empty arrays
   state = {
     hrefCopied: false,
     htmlCopied: false,
-    values: this.parameters.reduce((acc, param) => {
+    values: parameters.reduce((acc, param) => {
       acc[param] = '';
       return acc;
     }, {})
@@ -102,7 +102,8 @@ export default class MailTo extends React.Component {
           </span>
         </h1>
         <p className="description">
-          HTML <code>mailto</code>'s made easy 👌
+          HTML <code>mailto</code>
+          {`'s made easy 👌`}
         </p>
         <div className="inputs">{this.buildInputs()}</div>
         <h1>Use It</h1>
