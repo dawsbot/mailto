@@ -9,11 +9,12 @@
     "node": "10"
   },
   "scripts": {
-    "dev": "next",
     "build": "next build",
-    "start": "next start",
+    "dev": "next",
     "precommit": "lint-staged",
-    "test": "lint-staged && eslint ."
+    "start": "next start",
+    "test": "lint-staged && eslint .",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "copy-to-clipboard": "^3.0.8",
@@ -26,6 +27,7 @@
     "babel-eslint": "^7.2.3",
     "eslint": "^3.19.0",
     "eslint-plugin-react": "^7.11.1",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
     "husky": "^0.13.3",
     "lint-staged": "^3.4.1",
     "prettier": "^1.3.1"
