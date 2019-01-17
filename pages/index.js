@@ -1,6 +1,5 @@
 import Layout from '../components/layout';
-import Button from '../components/button';
-import ClickToCopy from '../components/clickToCopy';
+import ClickToCopy from '../components/click-to-copy';
 
 export default class MailTo extends React.Component {
   parameters = ['to', 'cc', 'bcc', 'subject', 'body'];
@@ -35,14 +34,16 @@ export default class MailTo extends React.Component {
   buildInputs = () => {
     return this.parameters.map(param => (
       <div key={param}>
-        <label>{param}: </label>
+        <label htmlFor={param}>{param}: </label>
         {param === 'body'
           ? <textarea
+              id={param}
               value={this.state.value}
               onChange={e => this.handleChange(e, param)}
               className="param-input"
             />
           : <input
+              id={param}
               type="text"
               value={this.state.value}
               onChange={e => this.handleChange(e, param)}
@@ -77,7 +78,17 @@ export default class MailTo extends React.Component {
     const Mailto = this.buildMailto();
     return (
       <Layout>
-        <h1>Welcome To Mailto 💌⚡️</h1>
+        <h1>
+          Welcome To Mailto
+          {' '}
+          <span
+            role="img"
+            aria-hidden="true"
+            aria-label="mailto at lightning speed"
+          >
+            💌⚡️
+          </span>
+        </h1>
         <p className="description">
           HTML <code>mailto</code>'s made easy 👌
         </p>
@@ -86,12 +97,26 @@ export default class MailTo extends React.Component {
         </div>
         <h1>Use It</h1>
         <div className="center">
-          <Button href={Mailto} text="Test Email" />
+          <a
+            className="button-link"
+            href={Mailto}
+            target="_blank"
+            aria-label="Open a test email in your default mail client"
+          >
+            Test Email
+            {/*<Button
+              value="Test Email"
+              aria-label="Open a test email in your default mail client"
+            />*/}
+          </a>
         </div>
         <br />
         <div>
           HTML href:
-          <ClickToCopy target={Mailto}>
+          <ClickToCopy
+            ariaLabelSuffix="raw HTML mailto string to system clipboard"
+            target={Mailto}
+          >
             <br />
             <code>
               {Mailto}
@@ -101,7 +126,10 @@ export default class MailTo extends React.Component {
         <br />
         <div>
           Full HTML string:
-          <ClickToCopy target={`<a href="${Mailto}">Mail Now</a>`}>
+          <ClickToCopy
+            aria-label="Copy raw HTML anchor tag string to system clipboard. This is the mailto string wrapped inside an anchor tag"
+            target={`<a href="${Mailto}">Mail Now</a>`}
+          >
             <br />
             <code>
               {`<a href="${Mailto}">Mail Now</a>`}
@@ -124,6 +152,25 @@ export default class MailTo extends React.Component {
           }
           code {
             word-wrap: break-word;
+          }
+          .button-link {
+            margin: 0px 8px;
+            background-color: #FD6C6C;
+            color: white;
+            border-width: 0px;
+            border-radius: 3px;
+            padding: 3px 15px;
+            cursor: pointer;
+            font-family: 'Coming Soon', cursive;
+            font-size: 14px;
+            transition: box-shadow  0.2s ease-in-out;
+            outline: none;
+            text-transform: capitalize;
+            max-height: 27px;
+            line-height: 27px;
+          }
+          .button-link:hover {
+            box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
           }
         `}</style>
       </Layout>

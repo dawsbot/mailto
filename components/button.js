@@ -1,10 +1,8 @@
-export default ({ href, text }) => (
-  <a href={href} target="_blank">
-    <button className="email-button" type="button">
-      {text}
-    </button>
+export default props => (
+  <div>
+    <input type="button" {...props} />
     <style jsx>{`
-      button {
+      input {
         margin: 0px 8px;
         background-color: #FD6C6C;
         color: white;
@@ -20,9 +18,9 @@ export default ({ href, text }) => (
         max-height: 27px;
         line-height: 27px;
       }
-      button:hover {
+      input:hover {
         box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       }
     `}</style>
-  </a>
+  </div>
 );
