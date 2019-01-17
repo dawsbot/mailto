@@ -6,11 +6,12 @@
   "author": "Dawson Botsford",
   "license": "MIT",
   "scripts": {
-    "dev": "next",
     "build": "next build",
-    "start": "next start",
+    "dev": "next",
     "precommit": "lint-staged",
-    "test": "lint-staged && eslint ."
+    "start": "next start",
+    "test": "lint-staged && eslint .",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "copy-to-clipboard": "^3.0.6",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "babel-eslint": "^7.2.3",
     "eslint": "^3.19.0",
+    "eslint-plugin-jsx-a11y": "^5.0.3",
     "eslint-plugin-react": "^6.10.3",
     "husky": "^0.13.3",
     "lint-staged": "^3.4.1",
