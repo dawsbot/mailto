@@ -43,7 +43,7 @@ export default class MailTo extends React.Component {
   };
 
   buildInputs = () => {
-    return this.parameters.map(param => (
+    return parameters.map(param => (
       <div key={param}>
         <label htmlFor={param}>{param}: </label>
         {param === 'body' ? (
