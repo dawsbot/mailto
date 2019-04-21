@@ -6,10 +6,11 @@
   "author": "Dawson Botsford",
   "license": "MIT",
   "engines": {
-    "node": "10"
+    "node": ">=8"
   },
   "scripts": {
     "build": "next build",
+    "now-build": "next build",
     "dev": "next",
     "start": "next start",
     "test": "lint-staged && eslint ."
