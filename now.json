@@ -1,0 +1,8 @@
+{
+    "version": 2,
+    "name": "mailto",
+    "alias": "mailto.now.sh",
+    "builds": [
+        { "src": "package.json", "use": "@now/next" }
+    ]
+}
