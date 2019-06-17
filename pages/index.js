@@ -77,6 +77,7 @@ export default class MailTo extends React.Component {
             height: 24px;
             width: 100%;
             transition: border 0.3s;
+            -webkit-appearance: none;
           }
           .param-input:focus {
             transition: border 1s;
