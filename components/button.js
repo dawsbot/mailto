@@ -17,6 +17,7 @@ export default props => (
         text-transform: capitalize;
         max-height: 27px;
         line-height: 27px;
+        -webkit-appearance: none;
       }
       input:hover {
         box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2),
