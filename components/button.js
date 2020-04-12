@@ -7,15 +7,14 @@ export default props => (
         background-color: #fd6c6c;
         color: white;
         border-width: 0px;
-        border-radius: 3px;
-        padding: 3px 15px;
+        border-radius: 6px;
+        padding: 5px 18px;
         cursor: pointer;
         font-family: 'Coming Soon', cursive;
         font-size: 14px;
         transition: box-shadow 0.2s ease-in-out;
         outline: none;
         text-transform: capitalize;
-        max-height: 27px;
         line-height: 27px;
         -webkit-appearance: none;
       }

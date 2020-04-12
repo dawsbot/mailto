@@ -4,7 +4,7 @@ import GHCorner from 'react-github-corner';
 export default ({ children }) => (
   <div>
     <Head>
-      <title>{`HTML mailto's made easy️`}</title>
+      <title>{`mailto builder`}</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link
@@ -16,8 +16,7 @@ export default ({ children }) => (
       <GHCorner
         href="https://github.com/dawsbot/mailto"
         bannerColor="#FD6C6C"
-        height="100px"
-        width="100px"
+        size="150px"
       />
       {children}
       <style jsx global>{`

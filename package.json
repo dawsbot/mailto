@@ -1,12 +1,12 @@
 {
   "name": "mailto",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Build html mailto's",
   "repository": "https://github.com/dawsbot",
-  "author": "Dawson Botsford",
+  "author": "@dawsbot",
   "license": "MIT",
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "scripts": {
     "build": "next build",
@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "copy-to-clipboard": "^3.0.8",
-    "next": "^9.3.2",
-    "react": "16.6.3",
-    "react-dom": "16.6.3",
+    "next": "^9.3.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
     "react-github-corner": "^2.3.0"
   },
   "devDependencies": {

@@ -3,16 +3,17 @@ import ClickToCopy from '../components/click-to-copy';
 
 const parameters = ['to', 'cc', 'bcc', 'subject', 'body'];
 
+const initialState = {
+  hrefCopied: false,
+  htmlCopied: false,
+  values: parameters.reduce((acc, param) => {
+    acc[param] = '';
+    return acc;
+  }, {})
+};
+
 export default class MailTo extends React.Component {
-  // initialize state to object with empty arrays
-  state = {
-    hrefCopied: false,
-    htmlCopied: false,
-    values: parameters.reduce((acc, param) => {
-      acc[param] = '';
-      return acc;
-    }, {})
-  };
+  state = initialState;
 
   handleChange = (event, inputName) => {
     this.setState({
@@ -44,13 +45,14 @@ export default class MailTo extends React.Component {
 
   buildInputs = () => {
     return parameters.map(param => (
-      <div key={param}>
+      <div key={param} className="flex-row">
         <label htmlFor={param}>{param}: </label>
         {param === 'body' ? (
           <textarea
             id={param}
             value={this.state.value}
             onChange={e => this.handleChange(e, param)}
+            rows={3}
             className="param-input"
           />
         ) : (
@@ -66,6 +68,10 @@ export default class MailTo extends React.Component {
           label {
             padding-right: 8px;
             font-size: 14px;
+            font-weight: bold;
+          }
+          input.param-input {
+            height: 24px;
           }
           .param-input {
             margin-bottom: 20px;
@@ -74,7 +80,6 @@ export default class MailTo extends React.Component {
             outline: none;
             font-family: 'Coming Soon', cursive;
             font-size: 16px;
-            height: 24px;
             width: 100%;
             transition: border 0.3s;
             -webkit-appearance: none;
@@ -83,6 +88,10 @@ export default class MailTo extends React.Component {
             transition: border 1s;
             border-color: black;
           }
+          textarea.param-input {
+            border: solid 2px #c9c9c9;
+            border-radius: 3px;
+          }
         `}</style>
       </div>
     ));
@@ -90,65 +99,72 @@ export default class MailTo extends React.Component {
 
   render() {
     const Mailto = this.buildMailto();
+    const isEdited = parameters.some(
+      parameterName =>
+        this.state.values[parameterName] !== initialState.values[parameterName]
+    );
     return (
       <Layout>
-        <h1>
-          Welcome To Mailto{' '}
-          <span
-            role="img"
-            aria-hidden="true"
-            aria-label="mailto at lightning speed"
-          >
-            💌⚡️
-          </span>
-        </h1>
-        <p className="description">
-          HTML <code>mailto</code>
-          {`'s made easy 👌`}
-        </p>
+        <div className="flex-row">
+          <h1 style={{ marginRight: '50px' }}>
+            Mailto{' '}
+            <span
+              role="img"
+              aria-hidden="true"
+              aria-label="mailto at lightning speed"
+            >
+              💌⚡️
+            </span>
+          </h1>
+          <p className="description">
+            HTML <code>mailto</code>
+            {`'s made easy 👌`}
+          </p>
+        </div>
         <div className="inputs">{this.buildInputs()}</div>
-        <h1>Use It</h1>
-        <div className="center">
-          <a
-            className="button-link"
-            href={Mailto}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Open a test email in your default mail client"
-          >
-            Test Email
-            {/*<Button
-              value="Test Email"
-              aria-label="Open a test email in your default mail client"
-            />*/}
-          </a>
-        </div>
-        <br />
-        <div>
-          HTML href:
-          <ClickToCopy
-            ariaLabelSuffix="raw HTML mailto string to system clipboard"
-            target={Mailto}
-            copied={this.state.hrefCopied}
-            handleClipBoardCopy={() => this.setState({ hrefCopied: true })}
-          >
+        {isEdited && (
+          <>
+            <h1>Use It</h1>
+            <div className="center">
+              <a
+                className="button-link"
+                href={Mailto}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open a test email in your default mail client"
+              >
+                Test Email
+              </a>
+            </div>
             <br />
-            <code>{Mailto}</code>
-          </ClickToCopy>
-        </div>
-        <br />
-        <div>
-          Full HTML string:
-          <ClickToCopy
-            aria-label="Copy raw HTML anchor tag string to system clipboard. This is the mailto string wrapped inside an anchor tag"
-            target={`<a href="${Mailto}">Mail Now</a>`}
-            copied={this.state.htmlCopied}
-            handleClipBoardCopy={() => this.setState({ htmlCopied: true })}
-          >
+            <div>
+              HTML href:
+              <ClickToCopy
+                ariaLabelSuffix="raw HTML mailto string to system clipboard"
+                target={Mailto}
+                copied={this.state.hrefCopied}
+                handleClipBoardCopy={() => this.setState({ hrefCopied: true })}
+              >
+                <br />
+                <code>{Mailto}</code>
+              </ClickToCopy>
+            </div>
             <br />
-            <code>{`<a href="${Mailto}">Mail Now</a>`}</code>
-          </ClickToCopy>
-        </div>
+            <div>
+              Full HTML string:
+              <ClickToCopy
+                aria-label="Copy raw HTML anchor tag string to system clipboard. This is the mailto string wrapped inside an anchor tag"
+                target={`<a href="${Mailto}">Mail Now</a>`}
+                copied={this.state.htmlCopied}
+                handleClipBoardCopy={() => this.setState({ htmlCopied: true })}
+              >
+                <br />
+                <code>{`<a href="${Mailto}">Mail Now</a>`}</code>
+              </ClickToCopy>
+            </div>
+          </>
+        )}
+        {/* global styles */}
         <style jsx>{`
           .center {
             text-align: center;
@@ -158,9 +174,6 @@ export default class MailTo extends React.Component {
           }
           h1 {
             margin-bottom: 0px;
-            margin-top: 0px;
-          }
-          .description {
             margin-top: 0px;
           }
           code {
@@ -185,6 +198,10 @@ export default class MailTo extends React.Component {
           .button-link:hover {
             box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2),
               0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          }
+          .flex-row {
+            display: flex;
+            flex-direction: row;
           }
         `}</style>
       </Layout>
