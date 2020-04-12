@@ -4,7 +4,7 @@ import GHCorner from 'react-github-corner';
 export default ({ children }) => (
   <div>
     <Head>
-      <title>{`mailto builder`}</title>
+      <title>{`Mailto builder`}</title>
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link
@@ -31,6 +31,7 @@ export default ({ children }) => (
       <style jsx global>{`
         body {
           margin: 100px 8vw;
+          font-size: 16px;
         }
 
         body,
@@ -47,6 +48,37 @@ export default ({ children }) => (
         .page-sections {
           display: flex;
           justify-content: center;
+        }
+
+        // Hightlight color
+        // https://stackoverflow.com/questions/2258647/changing-the-highlight-color-when-selecting-text-in-an-html-text-input
+        /*** Works on common browsers ***/
+        ::selection {
+          background-color: #fd6c6c;
+          color: #fff;
+        }
+
+        /*** Mozilla based browsers ***/
+        ::-moz-selection {
+          background-color: #fd6c6c;
+          color: #fff;
+        }
+
+        /***For Other Browsers ***/
+        ::-o-selection {
+          background-color: #fd6c6c;
+          color: #fff;
+        }
+
+        ::-ms-selection {
+          background-color: #fd6c6c;
+          color: #fff;
+        }
+
+        /*** For Webkit ***/
+        ::-webkit-selection {
+          background-color: #352e7e;
+          color: #fff;
         }
       `}</style>
     </div>

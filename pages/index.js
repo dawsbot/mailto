@@ -250,6 +250,12 @@ export default class MailTo extends React.Component {
           p.description {
             color: white;
           }
+
+          code {
+            background-color: black;
+            color: white;
+            padding: 2px 8px;
+          }
         `}</style>
       </Layout>
     );
