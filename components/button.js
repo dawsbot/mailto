@@ -10,7 +10,6 @@ export default props => (
         border-radius: 6px;
         padding: 5px 18px;
         cursor: pointer;
-        font-family: 'Coming Soon', cursive;
         font-size: 14px;
         transition: box-shadow 0.2s ease-in-out;
         outline: none;

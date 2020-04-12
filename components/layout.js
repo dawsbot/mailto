@@ -8,7 +8,7 @@ export default ({ children }) => (
       <meta charSet="utf-8" />
       <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       <link
-        href="https://fonts.googleapis.com/css?family=Coming+Soon"
+        href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap"
         rel="stylesheet"
       />
 
@@ -31,8 +31,14 @@ export default ({ children }) => (
       <style jsx global>{`
         body {
           margin: 80px 20px;
-          font-family: 'Coming Soon', cursive;
         }
+
+        body,
+        textarea,
+        input {
+          font-family: 'Courier Prime', monospace;
+        }
+
         .notbody {
           max-width: 600px;
           margin: auto;

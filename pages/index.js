@@ -81,7 +81,6 @@ export default class MailTo extends React.Component {
             border: none;
             border-bottom: solid 2px #c9c9c9;
             outline: none;
-            font-family: 'Coming Soon', cursive;
             font-size: 16px;
             width: 100%;
             transition: border 0.3s;
@@ -194,7 +193,6 @@ export default class MailTo extends React.Component {
             border-radius: 3px;
             padding: 3px 15px;
             cursor: pointer;
-            font-family: 'Coming Soon', cursive;
             font-size: 14px;
             transition: box-shadow 0.2s ease-in-out;
             outline: none;
