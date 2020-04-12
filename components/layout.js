@@ -27,10 +27,10 @@ export default ({ children }) => (
         bannerColor="#FD6C6C"
         size="160px"
       />
-      {children}
+      <div className="page-sections">{children}</div>
       <style jsx global>{`
         body {
-          margin: 80px 20px;
+          margin: 100px 8vw;
         }
 
         body,
@@ -40,8 +40,19 @@ export default ({ children }) => (
         }
 
         .notbody {
-          max-width: 600px;
-          margin: auto;
+          max-width: 1200px;
+          margin: 0 auto;
+          // text-align: center;
+        }
+
+        .page-sections {
+          display: flex;
+          justify-content: center;
+        }
+        @media only screen and (min-width: 1200px) {
+          section {
+            width: 50vw;
+          }
         }
       `}</style>
     </div>

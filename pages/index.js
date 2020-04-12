@@ -107,69 +107,70 @@ export default class MailTo extends React.Component {
     );
     return (
       <Layout>
-        <div className="flex-row">
-          <h1 style={{ marginRight: '50px' }}>
-            Mailto{' '}
-            <span
-              role="img"
-              aria-hidden="true"
-              aria-label="mailto at lightning speed"
-            >
-              💌⚡️
-            </span>
-          </h1>
-          <p className="description">
-            HTML <code>mailto</code>
-            {`'s made easy 👌`}
-          </p>
-        </div>
-        <div className="inputs">{this.buildInputs()}</div>
-        {isEdited && (
-          <>
-            <h1>Use It</h1>
-            <div className="center">
-              <a
-                className="button-link"
-                href={Mailto}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open a test email in your default mail client"
+        <section className="top-section">
+          <div className="flex-row">
+            <h1 style={{ marginRight: '50px' }}>
+              Mailto{' '}
+              <span
+                role="img"
+                aria-hidden="true"
+                aria-label="mailto at lightning speed"
               >
-                Test Email
-              </a>
-            </div>
-            <br />
-            <div>
-              HTML href:
-              <ClickToCopy
-                ariaLabelSuffix="raw HTML mailto string to system clipboard"
-                target={Mailto}
-                copied={this.state.hrefCopied}
-                handleClipBoardCopy={() =>
-                  this.setState({ hrefCopied: true, htmlCopied: false })
-                }
-              >
-                <br />
-                <code>{Mailto}</code>
-              </ClickToCopy>
-            </div>
-            <br />
-            <div>
-              Full HTML string:
-              <ClickToCopy
-                aria-label="Copy raw HTML anchor tag string to system clipboard. This is the mailto string wrapped inside an anchor tag"
-                target={`<a href="${Mailto}">Mail Now</a>`}
-                copied={this.state.htmlCopied}
-                handleClipBoardCopy={() =>
-                  this.setState({ htmlCopied: true, hrefCopied: false })
-                }
-              >
-                <br />
-                <code>{`<a href="${Mailto}">Mail Now</a>`}</code>
-              </ClickToCopy>
-            </div>
-          </>
-        )}
+                💌⚡️
+              </span>
+            </h1>
+            <p className="description">
+              HTML <code>mailto</code>
+              {`'s made easy 👌`}
+            </p>
+          </div>
+          <div className="inputs">{this.buildInputs()}</div>
+          {isEdited && (
+            <>
+              <div className="center">
+                <a
+                  className="button-link"
+                  href={Mailto}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open a test email in your default mail client"
+                >
+                  Test Email
+                </a>
+              </div>
+              <br />
+              <div>
+                HTML href:
+                <ClickToCopy
+                  ariaLabelSuffix="raw HTML mailto string to system clipboard"
+                  target={Mailto}
+                  copied={this.state.hrefCopied}
+                  handleClipBoardCopy={() =>
+                    this.setState({ hrefCopied: true, htmlCopied: false })
+                  }
+                >
+                  <br />
+                  <code>{Mailto}</code>
+                </ClickToCopy>
+              </div>
+              <br />
+              <div>
+                Full HTML string:
+                <ClickToCopy
+                  aria-label="Copy raw HTML anchor tag string to system clipboard. This is the mailto string wrapped inside an anchor tag"
+                  target={`<a href="${Mailto}">Mail Now</a>`}
+                  copied={this.state.htmlCopied}
+                  handleClipBoardCopy={() =>
+                    this.setState({ htmlCopied: true, hrefCopied: false })
+                  }
+                >
+                  <br />
+                  <code>{`<a href="${Mailto}">Mail Now</a>`}</code>
+                </ClickToCopy>
+              </div>
+            </>
+          )}
+        </section>
         {/* global styles */}
         <style jsx global>{`
           .center {
@@ -208,6 +209,16 @@ export default class MailTo extends React.Component {
             display: flex;
             flex-direction: row;
           }
+          section {
+            border: 2px solid #fd6c6c;
+            border-radius: 7px;
+            padding: 40px 50px;
+            box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2),
+              0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          }
+          // .top-section {
+          //   margin-bottom: 100px;
+          // }
         `}</style>
       </Layout>
     );
