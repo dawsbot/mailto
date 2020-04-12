@@ -42,17 +42,11 @@ export default ({ children }) => (
         .notbody {
           max-width: 1200px;
           margin: 0 auto;
-          // text-align: center;
         }
 
         .page-sections {
           display: flex;
           justify-content: center;
-        }
-        @media only screen and (min-width: 1200px) {
-          section {
-            width: 50vw;
-          }
         }
       `}</style>
     </div>

@@ -52,7 +52,7 @@ export default class MailTo extends React.Component {
             id={param}
             value={this.state.value}
             onChange={e => this.handleChange(e, param)}
-            rows={3}
+            rows={4}
             className="param-input"
           />
         ) : (
@@ -93,6 +93,7 @@ export default class MailTo extends React.Component {
           textarea.param-input {
             border: solid 2px #c9c9c9;
             border-radius: 3px;
+            padding: 10px;
           }
         `}</style>
       </div>
@@ -108,68 +109,73 @@ export default class MailTo extends React.Component {
     return (
       <Layout>
         <section className="top-section">
-          <div className="flex-row">
-            <h1 style={{ marginRight: '50px' }}>
-              Mailto{' '}
-              <span
-                role="img"
-                aria-hidden="true"
-                aria-label="mailto at lightning speed"
-              >
-                💌⚡️
-              </span>
-            </h1>
-            <p className="description">
-              HTML <code>mailto</code>
-              {`'s made easy 👌`}
-            </p>
+          <div className="mailto-header">
+            <div className="flex-row flex-between">
+              <h1 style={{ marginRight: '40px', color: 'white' }}>
+                Mailto{' '}
+                <span
+                  role="img"
+                  aria-hidden="true"
+                  aria-label="mailto at lightning speed"
+                >
+                  💌⚡️
+                </span>
+              </h1>
+              <p className="description">
+                HTML <code>mailto</code>
+                {`'s made easy 👌`}
+              </p>
+            </div>
           </div>
-          <div className="inputs">{this.buildInputs()}</div>
-          {isEdited && (
-            <>
-              <div className="center">
-                <a
-                  className="button-link"
-                  href={Mailto}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Open a test email in your default mail client"
-                >
-                  Test Email
-                </a>
-              </div>
-              <br />
-              <div>
-                HTML href:
-                <ClickToCopy
-                  ariaLabelSuffix="raw HTML mailto string to system clipboard"
-                  target={Mailto}
-                  copied={this.state.hrefCopied}
-                  handleClipBoardCopy={() =>
-                    this.setState({ hrefCopied: true, htmlCopied: false })
-                  }
-                >
-                  <br />
-                  <code>{Mailto}</code>
-                </ClickToCopy>
-              </div>
-              <br />
-              <div>
-                Full HTML string:
-                <ClickToCopy
-                  aria-label="Copy raw HTML anchor tag string to system clipboard. This is the mailto string wrapped inside an anchor tag"
-                  target={`<a href="${Mailto}">Mail Now</a>`}
-                  copied={this.state.htmlCopied}
-                  handleClipBoardCopy={() =>
-                    this.setState({ htmlCopied: true, hrefCopied: false })
-                  }
-                >
-                  <br />
-                  <code>{`<a href="${Mailto}">Mail Now</a>`}</code>
-                </ClickToCopy>
-              </div>
-            </>
-          )}
+
+          <div className="input-body">
+            <div className="inputs">{this.buildInputs()}</div>
+            {isEdited && (
+              <>
+                <div className="center">
+                  <a
+                    className="button-link"
+                    href={Mailto}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Open a test email in your default mail client"
+                  >
+                    Test Email
+                  </a>
+                </div>
+                <br />
+                <div>
+                  HTML href:
+                  <ClickToCopy
+                    ariaLabelSuffix="raw HTML mailto string to system clipboard"
+                    target={Mailto}
+                    copied={this.state.hrefCopied}
+                    handleClipBoardCopy={() =>
+                      this.setState({ hrefCopied: true, htmlCopied: false })
+                    }
+                  >
+                    <br />
+                    <code>{Mailto}</code>
+                  </ClickToCopy>
+                </div>
+                <br />
+                <div>
+                  Full HTML string:
+                  <ClickToCopy
+                    aria-label="Copy raw HTML anchor tag string to system clipboard. This is the mailto string wrapped inside an anchor tag"
+                    target={`<a href="${Mailto}">Mail Now</a>`}
+                    copied={this.state.htmlCopied}
+                    handleClipBoardCopy={() =>
+                      this.setState({ htmlCopied: true, hrefCopied: false })
+                    }
+                  >
+                    <br />
+                    <code>{`<a href="${Mailto}">Mail Now</a>`}</code>
+                  </ClickToCopy>
+                </div>
+              </>
+            )}
+          </div>
         </section>
         {/* global styles */}
         <style jsx global>{`
@@ -209,16 +215,41 @@ export default class MailTo extends React.Component {
             display: flex;
             flex-direction: row;
           }
+          .mailto-header > .flex-row {
+            align-items: center;
+          }
+          div.flex-between {
+            justify-content: space-between;
+          }
+          .mailto-header {
+            background-color: #fd6c6c;
+            margin: 0px;
+            padding: 10px 40px;
+          }
           section {
             border: 2px solid #fd6c6c;
-            border-radius: 7px;
-            padding: 40px 50px;
-            box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2),
-              0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px 0 rgba(99, 42, 42, 0.3),
+              0 6px 20px 0 rgba(99, 42, 42, 0.3);
           }
-          // .top-section {
-          //   margin-bottom: 100px;
-          // }
+          .input-body {
+            padding: 30px 30px;
+          }
+
+          // desktop and bigger special styles
+          @media only screen and (min-width: 1000px) {
+            section {
+              width: 50vw;
+              max-width: 1000px;
+            }
+
+            .input-body {
+              padding: 40px 50px;
+            }
+          }
+          p.description {
+            color: white;
+          }
         `}</style>
       </Layout>
     );
