@@ -11,12 +11,21 @@ export default ({ children }) => (
         href="https://fonts.googleapis.com/css?family=Coming+Soon"
         rel="stylesheet"
       />
+
+      <meta
+        name="description"
+        content="Template FULL emails in an html mailto. We make special characters and emojis simple!"
+      />
+      <meta
+        name="keywords"
+        content="mailto,web,developer,HTML,CSS,JavaScript"
+      />
     </Head>
     <div className="notbody">
       <GHCorner
         href="https://github.com/dawsbot/mailto"
         bannerColor="#FD6C6C"
-        size="150px"
+        size="160px"
       />
       {children}
       <style jsx global>{`

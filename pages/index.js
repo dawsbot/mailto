@@ -45,7 +45,7 @@ export default class MailTo extends React.Component {
 
   buildInputs = () => {
     return parameters.map(param => (
-      <div key={param} className="flex-row">
+      <div key={param} className="flex-row input-section">
         <label htmlFor={param}>{param}: </label>
         {param === 'body' ? (
           <textarea
@@ -65,9 +65,12 @@ export default class MailTo extends React.Component {
           />
         )}
         <style jsx>{`
+          .input-section {
+            margin: 8px 0px;
+          }
           label {
             padding-right: 8px;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
           }
           input.param-input {
@@ -143,7 +146,9 @@ export default class MailTo extends React.Component {
                 ariaLabelSuffix="raw HTML mailto string to system clipboard"
                 target={Mailto}
                 copied={this.state.hrefCopied}
-                handleClipBoardCopy={() => this.setState({ hrefCopied: true })}
+                handleClipBoardCopy={() =>
+                  this.setState({ hrefCopied: true, htmlCopied: false })
+                }
               >
                 <br />
                 <code>{Mailto}</code>
@@ -156,7 +161,9 @@ export default class MailTo extends React.Component {
                 aria-label="Copy raw HTML anchor tag string to system clipboard. This is the mailto string wrapped inside an anchor tag"
                 target={`<a href="${Mailto}">Mail Now</a>`}
                 copied={this.state.htmlCopied}
-                handleClipBoardCopy={() => this.setState({ htmlCopied: true })}
+                handleClipBoardCopy={() =>
+                  this.setState({ htmlCopied: true, hrefCopied: false })
+                }
               >
                 <br />
                 <code>{`<a href="${Mailto}">Mail Now</a>`}</code>
@@ -165,7 +172,7 @@ export default class MailTo extends React.Component {
           </>
         )}
         {/* global styles */}
-        <style jsx>{`
+        <style jsx global>{`
           .center {
             text-align: center;
           }
@@ -199,7 +206,7 @@ export default class MailTo extends React.Component {
             box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2),
               0 6px 20px 0 rgba(0, 0, 0, 0.19);
           }
-          .flex-row {
+          div.flex-row {
             display: flex;
             flex-direction: row;
           }
