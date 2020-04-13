@@ -1,3 +1,5 @@
+import { withRouter } from 'next/router';
+
 import Layout from '../components/layout';
 import ClickToCopy from '../components/click-to-copy';
 
@@ -12,17 +14,38 @@ const initialState = {
   }, {})
 };
 
-export default class MailTo extends React.Component {
+class MailTo extends React.Component {
   state = initialState;
 
+  componentDidMount() {
+    const asPath = this.props.router.asPath;
+    try {
+      if (asPath.startsWith('/#')) {
+        const encodedStringValues = asPath.replace('/#', '');
+        const formValues = JSON.parse(decodeURIComponent(encodedStringValues));
+
+        return window.setTimeout(
+          () => this.setState({ values: formValues }),
+          500
+        );
+      }
+    } catch (err) {
+      this.props.router.replace('/');
+    }
+  }
+
   handleChange = (event, inputName) => {
+    const values = {
+      ...this.state.values,
+      [inputName]: event.target.value
+    };
+    this.props.router.replace(
+      `/#${encodeURIComponent(JSON.stringify(values))}`
+    );
     this.setState({
       hrefCopied: false,
       htmlCopied: false,
-      values: {
-        ...this.state.values,
-        [inputName]: event.target.value
-      }
+      values
     });
   };
 
@@ -59,7 +82,7 @@ export default class MailTo extends React.Component {
           <input
             id={param}
             type="text"
-            value={this.state.value}
+            value={this.state.values[param]}
             onChange={e => this.handleChange(e, param)}
             className="param-input"
           />
@@ -261,3 +284,5 @@ export default class MailTo extends React.Component {
     );
   }
 }
+
+export default withRouter(MailTo);
