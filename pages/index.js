@@ -73,7 +73,7 @@ class MailTo extends React.Component {
         {param === 'body' ? (
           <textarea
             id={param}
-            value={this.state.value}
+            value={this.state.values[param]}
             onChange={e => this.handleChange(e, param)}
             rows={4}
             className="param-input"
@@ -133,9 +133,9 @@ class MailTo extends React.Component {
       <Layout>
         <section className="top-section">
           <div className="mailto-header">
-            <div className="flex-row flex-between">
-              <h1 style={{ marginRight: '40px', color: 'white' }}>
-                Mailto{' '}
+            <div className="flex-row flex-between" style={{ color: 'white' }}>
+              <h1>
+                Mailto.now.sh{' '}
                 <span
                   role="img"
                   aria-hidden="true"
@@ -167,7 +167,7 @@ class MailTo extends React.Component {
                   </a>
                 </div>
                 <br />
-                <div>
+                {/* <div>
                   HTML href:
                   <ClickToCopy
                     ariaLabelSuffix="raw HTML mailto string to system clipboard"
@@ -180,8 +180,8 @@ class MailTo extends React.Component {
                     <br />
                     <code>{Mailto}</code>
                   </ClickToCopy>
-                </div>
-                <br />
+                </div> */}
+                {/* <br />
                 <div>
                   Full HTML string:
                   <ClickToCopy
@@ -195,10 +195,30 @@ class MailTo extends React.Component {
                     <br />
                     <code>{`<a href="${Mailto}">Mail Now</a>`}</code>
                   </ClickToCopy>
-                </div>
+                </div> */}
               </>
             )}
           </div>
+          {isEdited && (
+            <div className="mailto-header">
+              <div className="flex-row flex-between" style={{ color: 'white' }}>
+                {/* <h1>
+                Mailto.now.sh{" "}
+                <span
+                  role="img"
+                  aria-hidden="true"
+                  aria-label="mailto at lightning speed"
+                >
+                  💌⚡️
+                </span>
+              </h1> */}
+                <code style={{ overflow: 'scroll', marginRight: '24px' }}>
+                  {Mailto}
+                </code>
+                COPY CODE
+              </div>
+            </div>
+          )}
         </section>
         {/* global styles */}
         <style jsx global>{`
@@ -240,14 +260,18 @@ class MailTo extends React.Component {
           }
           .mailto-header > .flex-row {
             align-items: center;
+            justiyf-content: center;
           }
           div.flex-between {
             justify-content: space-between;
+            width: 100%;
           }
           .mailto-header {
             background-color: #fd6c6c;
-            margin: 0px;
-            padding: 10px 40px;
+            height: 70px;
+            padding: 0px 40px;
+            display: flex;
+            flex-direction: row;
           }
           section {
             border: 2px solid #fd6c6c;
@@ -269,9 +293,6 @@ class MailTo extends React.Component {
             .input-body {
               padding: 40px 50px;
             }
-          }
-          p.description {
-            color: white;
           }
 
           code {
