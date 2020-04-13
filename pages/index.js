@@ -1,13 +1,13 @@
 import { withRouter } from 'next/router';
+import copy from 'copy-to-clipboard';
 
 import Layout from '../components/layout';
-import ClickToCopy from '../components/click-to-copy';
+import { FaTrash, FaClipboard, FaClipboardCheck } from 'react-icons/fa';
 
 const parameters = ['to', 'cc', 'bcc', 'subject', 'body'];
 
 const initialState = {
-  hrefCopied: false,
-  htmlCopied: false,
+  copied: false,
   values: parameters.reduce((acc, param) => {
     acc[param] = '';
     return acc;
@@ -30,21 +30,35 @@ class MailTo extends React.Component {
         );
       }
     } catch (err) {
+      // error parsing url-encoded string. reset to
       this.props.router.replace('/');
     }
   }
+
+  handleResetState = () => {
+    this.setState(initialState);
+    this.props.router.replace('/');
+  };
+
+  handleCopy = () => {
+    copy(this.buildMailto());
+    this.setState({ copied: true });
+  };
 
   handleChange = (event, inputName) => {
     const values = {
       ...this.state.values,
       [inputName]: event.target.value
     };
-    this.props.router.replace(
-      `/#${encodeURIComponent(JSON.stringify(values))}`
-    );
+    if (this.isEdited(values)) {
+      this.props.router.replace(
+        `/#${encodeURIComponent(JSON.stringify(values))}`
+      );
+    } else {
+      this.props.router.replace('/');
+    }
     this.setState({
-      hrefCopied: false,
-      htmlCopied: false,
+      copied: false,
       values
     });
   };
@@ -123,12 +137,15 @@ class MailTo extends React.Component {
     ));
   };
 
+  isEdited = values =>
+    parameters.some(
+      parameterName =>
+        values[parameterName] !== initialState.values[parameterName]
+    );
+
   render() {
     const Mailto = this.buildMailto();
-    const isEdited = parameters.some(
-      parameterName =>
-        this.state.values[parameterName] !== initialState.values[parameterName]
-    );
+    const isEdited = this.isEdited(this.state.values);
     return (
       <Layout>
         <section className="top-section">
@@ -167,61 +184,45 @@ class MailTo extends React.Component {
                   </a>
                 </div>
                 <br />
-                {/* <div>
-                  HTML href:
-                  <ClickToCopy
-                    ariaLabelSuffix="raw HTML mailto string to system clipboard"
-                    target={Mailto}
-                    copied={this.state.hrefCopied}
-                    handleClipBoardCopy={() =>
-                      this.setState({ hrefCopied: true, htmlCopied: false })
-                    }
-                  >
-                    <br />
-                    <code>{Mailto}</code>
-                  </ClickToCopy>
-                </div> */}
-                {/* <br />
-                <div>
-                  Full HTML string:
-                  <ClickToCopy
-                    aria-label="Copy raw HTML anchor tag string to system clipboard. This is the mailto string wrapped inside an anchor tag"
-                    target={`<a href="${Mailto}">Mail Now</a>`}
-                    copied={this.state.htmlCopied}
-                    handleClipBoardCopy={() =>
-                      this.setState({ htmlCopied: true, hrefCopied: false })
-                    }
-                  >
-                    <br />
-                    <code>{`<a href="${Mailto}">Mail Now</a>`}</code>
-                  </ClickToCopy>
-                </div> */}
               </>
             )}
           </div>
           {isEdited && (
             <div className="mailto-header">
               <div className="flex-row flex-between" style={{ color: 'white' }}>
-                {/* <h1>
-                Mailto.now.sh{" "}
-                <span
-                  role="img"
-                  aria-hidden="true"
-                  aria-label="mailto at lightning speed"
-                >
-                  💌⚡️
-                </span>
-              </h1> */}
                 <code style={{ overflow: 'scroll', marginRight: '24px' }}>
                   {Mailto}
                 </code>
-                COPY CODE
+                <div className="buttons-wrapper">
+                  <div onClick={this.handleResetState} className="trash-button">
+                    <span style={{ marginRight: '12px' }}>reset </span>
+                    <FaTrash />
+                  </div>
+                  <div onClick={this.handleCopy} className="trash-button">
+                    <span style={{ marginRight: '12px' }}>
+                      {this.state.copied ? 'copied' : 'copy'}
+                    </span>
+                    {this.state.copied ? <FaClipboardCheck /> : <FaClipboard />}
+                  </div>
+                </div>
               </div>
             </div>
           )}
         </section>
         {/* global styles */}
         <style jsx global>{`
+          .buttons-wrapper {
+            display: flex;
+            // flex-direction: column;
+          }
+          .trash-button {
+            width: 80px;
+            display: flex;
+            justify-content: space-between;
+            border: 1px solid white;
+            padding: 10px 18px;
+            border-radius: 3px;
+          }
           .center {
             text-align: center;
           }
