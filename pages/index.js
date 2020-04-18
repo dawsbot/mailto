@@ -1,44 +1,79 @@
-import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useState, useReducer, useCallback, useMemo } from 'react';
 import copy from 'copy-to-clipboard';
+import { FaTrash, FaClipboard, FaClipboardCheck } from 'react-icons/fa';
 
 import Layout from '../components/layout';
-import { FaTrash, FaClipboard, FaClipboardCheck } from 'react-icons/fa';
 
 const parameters = ['to', 'cc', 'bcc', 'subject', 'body'];
 
-// const initialState = {
-//   copied: false,
-//   values: parameters.reduce((acc, param) => {
-//     acc[param] = '';
-//     return acc;
-//   }, {})
-// };
+const initialState = parameters.reduce((acc, param) => {
+  acc[param] = '';
+  return acc;
+}, {});
+
+const useFormState = () => {
+  const reducer = (state, { type, payload }) => {
+    console.log('dispatching ', payload);
+    switch (type) {
+      case 'reset':
+        return initialState;
+      case 'set':
+        return {
+          ...state,
+          [payload.key]: payload.value
+        };
+    }
+  };
+  const [formState, dispatch] = useReducer(reducer, initialState);
+
+  const mailtoHref = useMemo(
+    () => {
+      const { to, ...relevantState } = formState;
+      // empty text fields should not be fed to mailto address
+      const validKeys = Object.keys(relevantState).filter(
+        param => relevantState[param].length > 0
+      );
+      const suffix = validKeys
+        .map(key => {
+          if (formState[key]) {
+            return key + '=' + encodeURIComponent(formState[key]);
+          }
+          return '';
+        })
+        .join('&');
+      const mailtoHref = `mailto:${to}${suffix && `?${suffix}`}`;
+      return mailtoHref;
+    },
+    [formState]
+  );
+
+  return {
+    formState,
+    setOneFormValue: payload => dispatch({ type: 'set', payload }),
+    resetForm: () => dispatch({ type: 'reset' }),
+
+    // computed values
+    isFormEdited: parameters.some(
+      parameterName => formState[parameterName] !== initialState[parameterName]
+    ),
+    mailtoHref
+  };
+};
 
 const MailTo = () => {
   const [copied, setCopied] = useState(false);
-  // state = initialState;
-  const router = useRouter();
-
-  useEffect(() => {
-    const { asPath } = router;
-    try {
-      if (asPath.startsWith('/#')) {
-        const encodedStringValues = asPath.replace('/#', '');
-        const formValues = JSON.parse(decodeURIComponent(encodedStringValues));
-
-        return window.setTimeout(() => setState({ values: formValues }), 500);
-      }
-    } catch (err) {
-      // error parsing url-encoded string. reset to
-      router.replace('/');
-    }
-  });
+  const {
+    formState,
+    setOneFormValue,
+    resetForm,
+    isFormEdited,
+    mailtoHref
+  } = useFormState();
+  console.log('formState.to: ', formState.to);
 
   const handleResetState = () => {
     setCopied(false);
-    // TODO: reset form state
-    router.replace('/');
+    resetForm();
   };
 
   const handleCopy = () => {
@@ -47,39 +82,8 @@ const MailTo = () => {
   };
 
   const handleChange = (event, inputName) => {
-    const values = {
-      ...state.values,
-      [inputName]: event.target.value
-    };
-    if (isEdited(values)) {
-      router.replace(`/#${encodeURIComponent(JSON.stringify(values))}`);
-    } else {
-      router.replace('/');
-    }
+    setOneFormValue({ key: inputName, value: event.target.value });
     setCopied(false);
-
-    // TODO: set new  form state
-    //  setState({
-    //   copied: false,
-    //   values
-    // });
-  };
-
-  const buildMailto = () => {
-    const { to, ...relevantState } = state.values;
-    // empty text fields should not be fed to mailto address
-    const validKeys = Object.keys(relevantState).filter(
-      param => relevantState[param].length > 0
-    );
-    const suffix = validKeys
-      .map(key => {
-        if (state.values[key]) {
-          return key + '=' + encodeURIComponent(state.values[key]);
-        }
-        return '';
-      })
-      .join('&');
-    return `mailto:${to}${suffix && `?${suffix}`}`;
   };
 
   const buildInputs = () => {
@@ -89,7 +93,7 @@ const MailTo = () => {
         {param === 'body' ? (
           <textarea
             id={param}
-            value={state.values[param]}
+            value={formState[param]}
             onChange={e => handleChange(e, param)}
             rows={4}
             className="param-input"
@@ -98,7 +102,7 @@ const MailTo = () => {
           <input
             id={param}
             type="text"
-            value={state.values[param]}
+            value={formState[param]}
             onChange={e => handleChange(e, param)}
             className="param-input"
           />
@@ -139,14 +143,7 @@ const MailTo = () => {
     ));
   };
 
-  const isEdited = values =>
-    parameters.some(
-      parameterName =>
-        values[parameterName] !== initialState.values[parameterName]
-    );
-
-  const Mailto = buildMailto();
-  const isEdited = isEdited(state.values);
+  console.log('mailtoHref: ', mailtoHref);
   return (
     <Layout>
       <section className="top-section">
@@ -171,24 +168,24 @@ const MailTo = () => {
 
         <div className="input-body">
           <div className="inputs">{buildInputs()}</div>
-          {isEdited && (
-            <>
-              <div className="center">
-                <a
-                  className="button-link"
-                  href={Mailto}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Open a test email in your default mail client"
-                >
-                  Test Email
-                </a>
-              </div>
-              <br />
-            </>
-          )}
+          {/* {isFormEdited && ( */}
+          <>
+            <div className="center">
+              <a
+                className="button-link"
+                href={mailtoHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open a test email in your default mail client"
+              >
+                "{mailtoHref}"" Test Email
+              </a>
+            </div>
+            <br />
+          </>
+          {/* )} */}
         </div>
-        {isEdited && (
+        {isFormEdited && (
           <div className="mailto-header">
             <div className="flex-row flex-between" style={{ color: 'white' }}>
               <code style={{ overflow: 'scroll', marginRight: '24px' }}>
