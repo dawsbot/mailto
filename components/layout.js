@@ -50,13 +50,14 @@ export default ({ children }) => (
       <style jsx global>{`
         body {
           margin: 100px 8vw;
-          font-size: 16px;
         }
 
         body,
         textarea,
+        button,
         input {
           font-family: 'Courier Prime', monospace;
+          font-size: 16px;
         }
 
         .notbody {

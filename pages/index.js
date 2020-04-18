@@ -1,6 +1,11 @@
-import { useState, useReducer, useCallback, useMemo } from 'react';
+import { useState, useReducer, useMemo } from 'react';
 import copy from 'copy-to-clipboard';
-import { FaTrash, FaClipboard, FaClipboardCheck } from 'react-icons/fa';
+import {
+  FaTrash,
+  FaClipboard,
+  FaClipboardCheck,
+  FaExternalLinkAlt
+} from 'react-icons/fa';
 
 import Layout from '../components/layout';
 
@@ -75,7 +80,7 @@ const MailTo = () => {
   };
 
   const handleCopy = () => {
-    copy(buildMailto());
+    copy(mailtoHref);
     setCopied(true);
   };
 
@@ -165,40 +170,62 @@ const MailTo = () => {
 
         <div className="input-body">
           <div className="inputs">{buildInputs()}</div>
-          {isFormEdited && (
-            <>
-              <div className="center">
-                <a
-                  className="button-link"
-                  href={mailtoHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Open a test email in your default mail client"
-                >
-                  Test Email
-                </a>
-              </div>
-              <br />
-            </>
-          )}
         </div>
         {isFormEdited && (
           <div className="mailto-header">
             <div className="flex-row flex-between" style={{ color: 'white' }}>
-              <code style={{ overflow: 'scroll', marginRight: '24px' }}>
-                {mailtoHref}
-              </code>
+              <div
+                style={{
+                  overflow: 'scroll',
+                  maxHeight: '34px',
+                  padding: '4px',
+                  backgroundColor: 'white',
+                  margin: '6px 24px 6px 0px',
+                  borderRadius: '4px'
+                }}
+              >
+                <code>{mailtoHref}</code>
+              </div>
+
               <div className="buttons-wrapper">
-                <div onClick={handleResetState} className="trash-button">
-                  <span style={{ marginRight: '12px' }}>reset </span>
-                  <FaTrash />
-                </div>
-                <div onClick={handleCopy} className="trash-button">
-                  <span style={{ marginRight: '12px' }}>
+                <button
+                  onClick={handleResetState}
+                  className="action-button left-button"
+                >
+                  <FaTrash color="white" />
+                </button>
+                <a
+                  href={mailtoHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open a test email in your default mail client"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <button className="action-button">
+                    <span style={{ marginRight: '12px' }}>test</span>
+                    <FaExternalLinkAlt color="white" />
+                  </button>
+                </a>
+                <button
+                  onClick={handleCopy}
+                  className="action-button copy-button right-button"
+                  style={{ height: '40px' }}
+                >
+                  <span
+                    style={{
+                      marginRight: '12px',
+                      fontWeight: 900,
+                      fontSize: '18px'
+                    }}
+                  >
                     {copied ? 'copied' : 'copy'}
                   </span>
-                  {copied ? <FaClipboardCheck /> : <FaClipboard />}
-                </div>
+                  {copied ? (
+                    <FaClipboardCheck color="white" />
+                  ) : (
+                    <FaClipboard color="white" />
+                  )}
+                </button>
               </div>
             </div>
           </div>
@@ -210,13 +237,23 @@ const MailTo = () => {
           display: flex;
           // flex-direction: column;
         }
-        .trash-button {
-          width: 80px;
-          display: flex;
-          justify-content: space-between;
+        .left-button {
+          border-radius: 3px 0 0 3px;
+        }
+        .action-button {
+          color: white;
+          background-color: transparent;
           border: 1px solid white;
           padding: 10px 18px;
-          border-radius: 3px;
+          display: flex;
+          justify-content: space-between;
+        }
+        .copy-button {
+          box-sizing: border-box;
+          width: 120px;
+        }
+        .right-button {
+          border-radius: 0 3px 3px 0;
         }
         .center {
           text-align: center;
@@ -292,8 +329,7 @@ const MailTo = () => {
         }
 
         code {
-          background-color: black;
-          color: white;
+          color: black;
           padding: 2px 8px;
         }
       `}</style>
