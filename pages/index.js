@@ -13,7 +13,6 @@ const initialState = parameters.reduce((acc, param) => {
 
 const useFormState = () => {
   const reducer = (state, { type, payload }) => {
-    console.log('dispatching ', payload);
     switch (type) {
       case 'reset':
         return initialState;
@@ -69,7 +68,6 @@ const MailTo = () => {
     isFormEdited,
     mailtoHref
   } = useFormState();
-  console.log('formState.to: ', formState.to);
 
   const handleResetState = () => {
     setCopied(false);
@@ -143,7 +141,6 @@ const MailTo = () => {
     ));
   };
 
-  console.log('mailtoHref: ', mailtoHref);
   return (
     <Layout>
       <section className="top-section">
@@ -168,28 +165,28 @@ const MailTo = () => {
 
         <div className="input-body">
           <div className="inputs">{buildInputs()}</div>
-          {/* {isFormEdited && ( */}
-          <>
-            <div className="center">
-              <a
-                className="button-link"
-                href={mailtoHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Open a test email in your default mail client"
-              >
-                "{mailtoHref}"" Test Email
-              </a>
-            </div>
-            <br />
-          </>
-          {/* )} */}
+          {isFormEdited && (
+            <>
+              <div className="center">
+                <a
+                  className="button-link"
+                  href={mailtoHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open a test email in your default mail client"
+                >
+                  Test Email
+                </a>
+              </div>
+              <br />
+            </>
+          )}
         </div>
         {isFormEdited && (
           <div className="mailto-header">
             <div className="flex-row flex-between" style={{ color: 'white' }}>
               <code style={{ overflow: 'scroll', marginRight: '24px' }}>
-                {Mailto}
+                {mailtoHref}
               </code>
               <div className="buttons-wrapper">
                 <div onClick={handleResetState} className="trash-button">
@@ -198,9 +195,9 @@ const MailTo = () => {
                 </div>
                 <div onClick={handleCopy} className="trash-button">
                   <span style={{ marginRight: '12px' }}>
-                    {state.copied ? 'copied' : 'copy'}
+                    {copied ? 'copied' : 'copy'}
                   </span>
-                  {state.copied ? <FaClipboardCheck /> : <FaClipboard />}
+                  {copied ? <FaClipboardCheck /> : <FaClipboard />}
                 </div>
               </div>
             </div>
