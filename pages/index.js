@@ -30,26 +30,23 @@ const useFormState = () => {
   };
   const [formState, dispatch] = useReducer(reducer, initialState);
 
-  const mailtoHref = useMemo(
-    () => {
-      const { to, ...relevantState } = formState;
-      // empty text fields should not be fed to mailto address
-      const validKeys = Object.keys(relevantState).filter(
-        param => relevantState[param].length > 0
-      );
-      const suffix = validKeys
-        .map(key => {
-          if (formState[key]) {
-            return key + '=' + encodeURIComponent(formState[key]);
-          }
-          return '';
-        })
-        .join('&');
-      const mailtoHref = `mailto:${to}${suffix && `?${suffix}`}`;
-      return mailtoHref;
-    },
-    [formState]
-  );
+  const mailtoHref = useMemo(() => {
+    const { to, ...relevantState } = formState;
+    // empty text fields should not be fed to mailto address
+    const validKeys = Object.keys(relevantState).filter(
+      param => relevantState[param].length > 0
+    );
+    const suffix = validKeys
+      .map(key => {
+        if (formState[key]) {
+          return key + '=' + encodeURIComponent(formState[key]);
+        }
+        return '';
+      })
+      .join('&');
+    const mailtoHref = `mailto:${to}${suffix && `?${suffix}`}`;
+    return mailtoHref;
+  }, [formState]);
 
   return {
     formState,
@@ -231,7 +228,6 @@ const MailTo = () => {
           </div>
         )}
       </section>
-      {/* global styles */}
       <style jsx global>{`
         .buttons-wrapper {
           display: flex;
