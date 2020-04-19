@@ -91,13 +91,13 @@ const MailTo = () => {
   } = useFormState();
 
   const handleResetState = () => {
-    logEvent('reset');
+    logEvent('reset', mailtoHref);
     setCopied(false);
     resetForm();
   };
 
   const handleCopy = () => {
-    logEvent('copy-to-clipboard');
+    logEvent('copy-to-clipboard', mailtoHref);
     copy(mailtoHref);
     setCopied(true);
   };
@@ -249,7 +249,7 @@ const MailTo = () => {
                   </Button>
                   <a
                     href={mailtoHref}
-                    onClick={() => logEvent('open-mail-client')}
+                    onClick={() => logEvent('open-mail-client', mailtoHref)}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="Open a test email in your default mail client"

@@ -38,7 +38,7 @@ export default ({ children }) => {
         <GHCorner
           href="https://github.com/dawsbot/mailto"
           bannerColor="#FD6C6C"
-          size={'calc(18vw)'}
+          size={'calc(14vw + 20px)'}
         />
         <div className="page-sections">{children}</div>
         <style jsx global>{`
