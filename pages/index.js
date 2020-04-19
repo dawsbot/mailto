@@ -8,7 +8,24 @@ import {
 } from 'react-icons/fa';
 
 import Layout from '../components/layout';
+import styled from 'styled-components';
 
+const primaryPink = '#fd6c6c';
+
+const Button = styled.button`
+  transition: all 0.3s ease;
+  color: white;
+  background-color: transparent;
+  border: 1px solid white;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  :hover {
+    cursor: pointer;
+    background-color: white;
+    color: ${primaryPink};
+  }
+`;
 const parameters = ['to', 'cc', 'bcc', 'subject', 'body'];
 
 const initialState = parameters.reduce((acc, param) => {
@@ -185,12 +202,9 @@ const MailTo = () => {
               </div>
 
               <div className="buttons-wrapper">
-                <button
-                  onClick={handleResetState}
-                  className="action-button left-button"
-                >
-                  <FaTrash color="white" />
-                </button>
+                <Button onClick={handleResetState} className="left-button">
+                  <FaTrash />
+                </Button>
                 <a
                   href={mailtoHref}
                   target="_blank"
@@ -198,15 +212,14 @@ const MailTo = () => {
                   aria-label="Open a test email in your default mail client"
                   style={{ textDecoration: 'none' }}
                 >
-                  <button className="action-button">
+                  <Button>
                     <span style={{ marginRight: '12px' }}>test</span>
-                    <FaExternalLinkAlt color="white" />
-                  </button>
+                    <FaExternalLinkAlt />
+                  </Button>
                 </a>
-                <button
+                <Button
                   onClick={handleCopy}
-                  className="action-button copy-button right-button"
-                  style={{ height: '40px' }}
+                  className="copy-button right-button"
                 >
                   <span
                     style={{
@@ -217,12 +230,8 @@ const MailTo = () => {
                   >
                     {copied ? 'copied' : 'copy'}
                   </span>
-                  {copied ? (
-                    <FaClipboardCheck color="white" />
-                  ) : (
-                    <FaClipboard color="white" />
-                  )}
-                </button>
+                  {copied ? <FaClipboardCheck /> : <FaClipboard />}
+                </Button>
               </div>
             </div>
           </div>
@@ -231,18 +240,9 @@ const MailTo = () => {
       <style jsx global>{`
         .buttons-wrapper {
           display: flex;
-          // flex-direction: column;
         }
         .left-button {
           border-radius: 3px 0 0 3px;
-        }
-        .action-button {
-          color: white;
-          background-color: transparent;
-          border: 1px solid white;
-          padding: 10px 18px;
-          display: flex;
-          justify-content: space-between;
         }
         .copy-button {
           box-sizing: border-box;
@@ -264,32 +264,12 @@ const MailTo = () => {
         code {
           word-wrap: break-word;
         }
-        .button-link {
-          margin: 0px 8px;
-          background-color: #fd6c6c;
-          color: white;
-          border-width: 0px;
-          border-radius: 3px;
-          padding: 3px 15px;
-          cursor: pointer;
-          font-size: 14px;
-          transition: box-shadow 0.2s ease-in-out;
-          outline: none;
-          text-transform: capitalize;
-          max-height: 27px;
-          line-height: 27px;
-        }
-        .button-link:hover {
-          box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.2),
-            0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        }
         div.flex-row {
           display: flex;
           flex-direction: row;
         }
         .mailto-header > .flex-row {
           align-items: center;
-          justiyf-content: center;
         }
         div.flex-between {
           justify-content: space-between;
