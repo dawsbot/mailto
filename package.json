@@ -21,6 +21,7 @@
     "next": "^9.3.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-ga": "^2.7.0",
     "react-github-corner": "^2.3.0",
     "react-icons": "^3.9.0",
     "styled-components": "^5.1.0"
@@ -37,7 +38,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run test"
     }
   },
   "lint-staged": {

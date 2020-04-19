@@ -1,4 +1,5 @@
 import { useState, useReducer, useMemo } from 'react';
+import Head from 'next/head';
 import copy from 'copy-to-clipboard';
 import {
   FaTrash,
@@ -6,9 +7,10 @@ import {
   FaClipboardCheck,
   FaExternalLinkAlt
 } from 'react-icons/fa';
+import styled from 'styled-components';
+import { logEvent } from '../utils/analytics';
 
 import Layout from '../components/layout';
-import styled from 'styled-components';
 
 const primaryPink = '#fd6c6c';
 
@@ -89,11 +91,13 @@ const MailTo = () => {
   } = useFormState();
 
   const handleResetState = () => {
+    logEvent('reset');
     setCopied(false);
     resetForm();
   };
 
   const handleCopy = () => {
+    logEvent('copy-to-clipboard');
     copy(mailtoHref);
     setCopied(true);
   };
@@ -161,155 +165,198 @@ const MailTo = () => {
   };
 
   return (
-    <Layout>
-      <section className="top-section">
-        <div className="mailto-header">
-          <div className="flex-row flex-between" style={{ color: 'white' }}>
-            <h1>
-              Mailto.now.sh{' '}
-              <span
-                role="img"
-                aria-hidden="true"
-                aria-label="mailto at lightning speed"
-              >
-                💌⚡️
-              </span>
-            </h1>
-            <p className="description">
-              HTML <code>mailto</code>
-              {`'s made easy 👌`}
-            </p>
-          </div>
-        </div>
+    <>
+      <Head>
+        <title>Mailto builder</title>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap"
+          rel="stylesheet"
+        />
 
-        <div className="input-body">
-          <div className="inputs">{buildInputs()}</div>
-        </div>
-        {isFormEdited && (
+        <meta
+          name="description"
+          content="Template FULL emails in an html mailto. We do the hard work to encode your to, subject, body, for easy emails using special characters and emojis!"
+        />
+        <meta
+          name="keywords"
+          content="mailto,email,web,developer,HTML,CSS,JavaScript,emoji,nextjs,zeit,nowjs"
+        />
+
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon-16x16.png"
+        />
+        <link rel="manifest" href="/site.webmanifest" />
+      </Head>
+      <Layout>
+        <section className="top-section">
           <div className="mailto-header">
             <div className="flex-row flex-between" style={{ color: 'white' }}>
-              <div
-                style={{
-                  overflow: 'scroll',
-                  maxHeight: '34px',
-                  padding: '4px',
-                  backgroundColor: 'white',
-                  margin: '6px 24px 6px 0px',
-                  borderRadius: '4px'
-                }}
-              >
-                <code>{mailtoHref}</code>
-              </div>
-
-              <div className="buttons-wrapper">
-                <Button onClick={handleResetState} className="left-button">
-                  <FaTrash />
-                </Button>
-                <a
-                  href={mailtoHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Open a test email in your default mail client"
-                  style={{ textDecoration: 'none' }}
+              <h1>
+                Mailto.now.sh{' '}
+                <span
+                  role="img"
+                  aria-hidden="true"
+                  aria-label="mailto at lightning speed"
                 >
-                  <Button>
-                    <span style={{ marginRight: '12px' }}>test</span>
-                    <FaExternalLinkAlt />
-                  </Button>
-                </a>
-                <Button
-                  onClick={handleCopy}
-                  className="copy-button right-button"
-                >
-                  <span
-                    style={{
-                      marginRight: '12px',
-                      fontWeight: 900,
-                      fontSize: '18px'
-                    }}
-                  >
-                    {copied ? 'copied' : 'copy'}
-                  </span>
-                  {copied ? <FaClipboardCheck /> : <FaClipboard />}
-                </Button>
-              </div>
+                  💌⚡️
+                </span>
+              </h1>
+              <p className="description">
+                HTML <code>mailto</code>
+                {`'s made easy 👌`}
+              </p>
             </div>
           </div>
-        )}
-      </section>
-      <style jsx global>{`
-        .buttons-wrapper {
-          display: flex;
-        }
-        .left-button {
-          border-radius: 3px 0 0 3px;
-        }
-        .copy-button {
-          box-sizing: border-box;
-          width: 120px;
-        }
-        .right-button {
-          border-radius: 0 3px 3px 0;
-        }
-        .center {
-          text-align: center;
-        }
-        .inputs {
-          width: 100%;
-        }
-        h1 {
-          margin-bottom: 0px;
-          margin-top: 0px;
-        }
-        code {
-          word-wrap: break-word;
-        }
-        div.flex-row {
-          display: flex;
-          flex-direction: row;
-        }
-        .mailto-header > .flex-row {
-          align-items: center;
-        }
-        div.flex-between {
-          justify-content: space-between;
-          width: 100%;
-        }
-        .mailto-header {
-          background-color: #fd6c6c;
-          height: 70px;
-          padding: 0px 40px;
-          display: flex;
-          flex-direction: row;
-        }
-        section {
-          border: 2px solid #fd6c6c;
-          border-radius: 8px;
-          box-shadow: 0 4px 6px 0 rgba(99, 42, 42, 0.3),
-            0 6px 20px 0 rgba(99, 42, 42, 0.3);
-        }
-        .input-body {
-          padding: 30px 30px;
-        }
 
-        // desktop and bigger special styles
-        @media only screen and (min-width: 1000px) {
+          <div className="input-body">
+            <div className="inputs">{buildInputs()}</div>
+          </div>
+          {isFormEdited && (
+            <div className="mailto-header">
+              <div className="flex-row flex-between" style={{ color: 'white' }}>
+                <div
+                  style={{
+                    overflow: 'scroll',
+                    padding: '4px',
+                    backgroundColor: 'white',
+                    margin: '6px 24px 6px 0px',
+                    borderRadius: '2px',
+                    maxHeight: '120px'
+                  }}
+                >
+                  <code>{mailtoHref}</code>
+                </div>
+
+                <div className="buttons-wrapper">
+                  <Button onClick={handleResetState} className="left-button">
+                    <FaTrash />
+                  </Button>
+                  <a
+                    href={mailtoHref}
+                    onClick={() => logEvent('open-mail-client')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Open a test email in your default mail client"
+                    style={{ textDecoration: 'none' }}
+                  >
+                    <Button>
+                      <span style={{ marginRight: '12px' }}>test</span>
+                      <FaExternalLinkAlt />
+                    </Button>
+                  </a>
+                  <Button
+                    onClick={handleCopy}
+                    className="copy-button right-button"
+                  >
+                    <span
+                      style={{
+                        marginRight: '12px',
+                        fontWeight: 900,
+                        fontSize: '18px'
+                      }}
+                    >
+                      {copied ? 'copied' : 'copy'}
+                    </span>
+                    {copied ? <FaClipboardCheck /> : <FaClipboard />}
+                  </Button>
+                </div>
+              </div>
+            </div>
+          )}
+        </section>
+        <style jsx global>{`
+          .buttons-wrapper {
+            display: flex;
+          }
+          .left-button {
+            width: 40px;
+            border-radius: 14px 0 0 14px;
+            padding-left: 12px;
+          }
+          .copy-button {
+            box-sizing: border-box;
+            width: 112px;
+          }
+          .right-button {
+            border-radius: 0 14px 14px 0;
+            padding-right: 12px;
+          }
+          .center {
+            text-align: center;
+          }
+          .inputs {
+            width: 100%;
+          }
+          h1 {
+            margin-bottom: 0px;
+            margin-top: 0px;
+          }
+          code {
+            word-wrap: break-word;
+          }
+          div.flex-row {
+            display: flex;
+            flex-direction: row;
+          }
+          .mailto-header > .flex-row {
+            align-items: center;
+          }
+          div.flex-between {
+            justify-content: space-between;
+            width: 100%;
+          }
+          .mailto-header {
+            background-color: #fd6c6c;
+            padding: 0px 40px;
+            display: flex;
+            min-height: 70px;
+            flex-direction: row;
+          }
           section {
-            width: 50vw;
-            max-width: 1000px;
+            border: 2px solid #fd6c6c;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px 0 rgba(99, 42, 42, 0.3),
+              0 6px 20px 0 rgba(99, 42, 42, 0.3);
           }
-
           .input-body {
-            padding: 40px 50px;
+            padding: 30px 30px;
           }
-        }
 
-        code {
-          color: black;
-          padding: 2px 8px;
-        }
-      `}</style>
-    </Layout>
+          // desktop and bigger special styles
+          @media only screen and (min-width: 1000px) {
+            section {
+              width: 60vw;
+              max-width: 1000px;
+            }
+
+            .input-body {
+              padding: 40px 50px;
+            }
+          }
+
+          code {
+            color: black;
+            padding: 2px 8px;
+          }
+        `}</style>
+      </Layout>
+    </>
   );
 };
 
