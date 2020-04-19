@@ -1,8 +1,11 @@
 {
-    "version": 2,
-    "name": "mailto",
-    "alias": "mailto.now.sh",
-    "builds": [
-        { "src": "package.json", "use": "@now/next" }
-    ]
+  "version": 2,
+  "name": "mailto",
+  "alias": "mailto.now.sh",
+  "builds": [{ "src": "package.json", "use": "@now/next" }],
+  "build": {
+    "env": {
+      "GA_TRACKING_ID": "@ga_tracking_id"
+    }
+  }
 }
