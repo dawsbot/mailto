@@ -28,6 +28,20 @@ const Button = styled.button`
     color: ${primaryPink};
   }
 `;
+
+const WindowTopAndBottom = styled.div`
+  background-color: #fd6c6c;
+  padding: 16px 40px;
+  display: flex;
+  min-height: 70px;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  justify-content: space-between;
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+  }
+`;
 const parameters = ['to', 'cc', 'bcc', 'subject', 'body'];
 
 const initialState = parameters.reduce((acc, param) => {
@@ -204,80 +218,77 @@ const MailTo = () => {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <Layout>
-        <section className="top-section">
-          <div className="mailto-header">
-            <div className="flex-row flex-between" style={{ color: 'white' }}>
-              <h1>
-                Mailto.now.sh{' '}
-                <span
-                  role="img"
-                  aria-hidden="true"
-                  aria-label="mailto at lightning speed"
-                >
-                  💌⚡️
-                </span>
-              </h1>
-              <p className="description">
-                HTML <code>mailto</code>
-                {`'s made easy 👌`}
-              </p>
-            </div>
-          </div>
+        <section style={{ width: '100%' }}>
+          <WindowTopAndBottom>
+            <h1>
+              Mailto.now.sh{' '}
+              <span
+                role="img"
+                aria-hidden="true"
+                aria-label="mailto at lightning speed"
+              >
+                💌⚡️
+              </span>
+            </h1>
+            <p className="description">
+              HTML <code>mailto</code>
+              {`'s made easy 👌`}
+            </p>
+          </WindowTopAndBottom>
 
           <div className="input-body">
             <div className="inputs">{buildInputs()}</div>
           </div>
           {isFormEdited && (
-            <div className="mailto-header">
-              <div className="flex-row flex-between" style={{ color: 'white' }}>
-                <div
-                  style={{
-                    overflow: 'scroll',
-                    padding: '4px',
-                    backgroundColor: 'white',
-                    margin: '6px 24px 6px 0px',
-                    borderRadius: '2px',
-                    maxHeight: '120px'
-                  }}
-                >
-                  <code>{mailtoHref}</code>
-                </div>
-
-                <div className="buttons-wrapper">
-                  <Button onClick={handleResetState} className="left-button">
-                    <FaTrash />
-                  </Button>
-                  <a
-                    href={mailtoHref}
-                    onClick={() => logEvent('open-mail-client', mailtoHref)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Open a test email in your default mail client"
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <Button>
-                      <span style={{ marginRight: '12px' }}>test</span>
-                      <FaExternalLinkAlt />
-                    </Button>
-                  </a>
-                  <Button
-                    onClick={handleCopy}
-                    className="copy-button right-button"
-                  >
-                    <span
-                      style={{
-                        marginRight: '12px',
-                        fontWeight: 900,
-                        fontSize: '18px'
-                      }}
-                    >
-                      {copied ? 'copied' : 'copy'}
-                    </span>
-                    {copied ? <FaClipboardCheck /> : <FaClipboard />}
-                  </Button>
-                </div>
+            <WindowTopAndBottom>
+              <div
+                style={{
+                  overflow: 'scroll',
+                  padding: '4px',
+                  backgroundColor: 'white',
+                  margin: '6px 24px 6px 0px',
+                  borderRadius: '2px',
+                  maxHeight: '120px',
+                  maxWidth: '70vw'
+                }}
+              >
+                <code>{mailtoHref}</code>
               </div>
-            </div>
+
+              <div className="buttons-wrapper">
+                <Button onClick={handleResetState} className="left-button">
+                  <FaTrash />
+                </Button>
+                <a
+                  href={mailtoHref}
+                  onClick={() => logEvent('open-mail-client', mailtoHref)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open a test email in your default mail client"
+                  style={{ textDecoration: 'none' }}
+                >
+                  <Button>
+                    <span style={{ marginRight: '12px' }}>test</span>
+                    <FaExternalLinkAlt />
+                  </Button>
+                </a>
+                <Button
+                  onClick={handleCopy}
+                  className="copy-button right-button"
+                >
+                  <span
+                    style={{
+                      marginRight: '12px',
+                      fontWeight: 900,
+                      fontSize: '18px'
+                    }}
+                  >
+                    {copied ? 'copied' : 'copy'}
+                  </span>
+                  {copied ? <FaClipboardCheck /> : <FaClipboard />}
+                </Button>
+              </div>
+            </WindowTopAndBottom>
           )}
         </section>
         <style jsx global>{`
@@ -314,20 +325,6 @@ const MailTo = () => {
             display: flex;
             flex-direction: row;
           }
-          .mailto-header > .flex-row {
-            align-items: center;
-          }
-          div.flex-between {
-            justify-content: space-between;
-            width: 100%;
-          }
-          .mailto-header {
-            background-color: #fd6c6c;
-            padding: 0px 40px;
-            display: flex;
-            min-height: 70px;
-            flex-direction: row;
-          }
           section {
             border: 2px solid #fd6c6c;
             border-radius: 8px;
@@ -346,7 +343,7 @@ const MailTo = () => {
             }
 
             .input-body {
-              padding: 40px 50px;
+              padding: 40px 5vw;
             }
           }
 

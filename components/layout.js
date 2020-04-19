@@ -6,12 +6,14 @@ import { FaWrench } from 'react-icons/fa';
 import { initGA, logPageView } from '../utils/analytics';
 
 const Footer = styled.footer`
-  position: fixed;
-  bottom: 26px;
-  right: 80px;
+  padding-top: 120px;
 `;
 
 const OuterWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 100px 8vw;
 `;
 
@@ -34,68 +36,60 @@ export default ({ children }) => {
   }, []);
   return (
     <OuterWrapper>
-      <div className="notbody">
-        <GHCorner
-          href="https://github.com/dawsbot/mailto"
-          bannerColor="#FD6C6C"
-          size={'calc(14vw + 20px)'}
-        />
-        <div className="page-sections">{children}</div>
-        <style jsx global>{`
-          body {
-            margin: 0;
-          }
+      <GHCorner
+        href="https://github.com/dawsbot/mailto"
+        bannerColor="#FD6C6C"
+        size={'calc(14vw + 20px)'}
+      />
+      {children}
+      <style jsx global>{`
+        body {
+          margin: 0;
+        }
 
-          body,
-          textarea,
-          button,
-          input {
-            font-family: 'Courier Prime', monospace;
-            font-size: 16px;
-          }
+        body,
+        textarea,
+        button,
+        input {
+          font-family: 'Courier Prime', monospace;
+          font-size: 16px;
+        }
 
-          .notbody {
-            max-width: 1200px;
-            margin: 0 auto;
-          }
+        .page-sections {
+          width: 100%;
+        }
 
-          .page-sections {
-            display: flex;
-            justify-content: center;
-          }
+        // Hightlight color
+        // https://stackoverflow.com/questions/2258647/changing-the-highlight-color-when-selecting-text-in-an-html-text-input
+        /*** Works on common browsers ***/
+        ::selection {
+          background-color: #fd6c6c;
+          color: #fff;
+        }
 
-          // Hightlight color
-          // https://stackoverflow.com/questions/2258647/changing-the-highlight-color-when-selecting-text-in-an-html-text-input
-          /*** Works on common browsers ***/
-          ::selection {
-            background-color: #fd6c6c;
-            color: #fff;
-          }
+        /*** Mozilla based browsers ***/
+        ::-moz-selection {
+          background-color: #fd6c6c;
+          color: #fff;
+        }
 
-          /*** Mozilla based browsers ***/
-          ::-moz-selection {
-            background-color: #fd6c6c;
-            color: #fff;
-          }
+        /***For Other Browsers ***/
+        ::-o-selection {
+          background-color: #fd6c6c;
+          color: #fff;
+        }
 
-          /***For Other Browsers ***/
-          ::-o-selection {
-            background-color: #fd6c6c;
-            color: #fff;
-          }
+        ::-ms-selection {
+          background-color: #fd6c6c;
+          color: #fff;
+        }
 
-          ::-ms-selection {
-            background-color: #fd6c6c;
-            color: #fff;
-          }
-
-          /*** For Webkit ***/
-          ::-webkit-selection {
-            background-color: #352e7e;
-            color: #fff;
-          }
-        `}</style>
-      </div>
+        /*** For Webkit ***/
+        ::-webkit-selection {
+          background-color: #352e7e;
+          color: #fff;
+        }
+      `}</style>
       <Footer>
         <Wrench /> Crafted by{' '}
         <a
