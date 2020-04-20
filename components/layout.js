@@ -91,14 +91,13 @@ export default ({ children }) => {
         }
       `}</style>
       <Footer>
-        <Wrench /> Crafted by{' '}
         <a
           href="https://dawsbot.com"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: '#fd6c6c' }}
         >
-          Dawson
+          <Wrench /> Crafted by Dawson
         </a>
       </Footer>
     </OuterWrapper>
