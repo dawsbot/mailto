@@ -184,18 +184,46 @@ const MailTo = () => {
         <title>Mailto builder</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap"
-          rel="stylesheet"
-        />
-
         <meta
           name="description"
           content="Template FULL emails in an html mailto. We do the hard work to encode your to, subject, body, for easy emails using special characters and emojis!"
         />
+
         <meta
           name="keywords"
           content="mailto,email,web,developer,HTML,CSS,JavaScript,emoji,nextjs,zeit,nowjs"
+        />
+
+        {/* <!-- Google / Search Engine Tags --> */}
+        <meta itemProp="name" content="Mailto builder" />
+        <meta
+          itemProp="description"
+          content="Template FULL emails in an html mailto. We do the hard work to encode your to, subject, body, for easy emails using special characters and emojis!"
+        />
+        <meta itemProp="image" content="https://mailto.now.sh/demo.png" />
+
+        {/* <!-- Facebook Meta Tags --> */}
+        <meta property="og:url" content="https://mailto.now.sh" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Mailto builder" />
+        <meta
+          property="og:description"
+          content="Template FULL emails in an html mailto. We do the hard work to encode your to, subject, body, for easy emails using special characters and emojis!"
+        />
+        <meta property="og:image" content="https://mailto.now.sh/demo.png" />
+
+        {/* <!-- Twitter Meta Tags --> */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Mailto builder" />
+        <meta
+          name="twitter:description"
+          content="Template FULL emails in an html mailto. We do the hard work to encode your to, subject, body, for easy emails using special characters and emojis!"
+        />
+        <meta name="twitter:image" content="https://mailto.now.sh/demo.png" />
+
+        <link
+          href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap"
+          rel="stylesheet"
         />
 
         <link
