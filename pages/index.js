@@ -13,6 +13,10 @@ import { logEvent } from '../utils/analytics';
 import Layout from '../components/layout';
 
 const primaryPink = '#fd6c6c';
+const metaTitle = 'Mailto.now.sh | The mailto encoder';
+const metaDescription =
+  'Encode full emails as a mailto. We do the hard work to url encode your subject and body for emails using special characters and emojis. Just paste the result in your html anchor element!';
+const metaImage = 'https://mailto.now.sh/demo.png';
 
 const Button = styled.button`
   transition: all 0.3s ease;
@@ -30,7 +34,7 @@ const Button = styled.button`
 `;
 
 const WindowTopAndBottom = styled.div`
-  background-color: #fd6c6c;
+  background-color: ${primaryPink};
   padding: 16px 40px;
   display: flex;
   min-height: 70px;
@@ -121,7 +125,7 @@ const MailTo = () => {
     setCopied(false);
   };
 
-  const buildInputs = () => {
+  const encodInputs = () => {
     return parameters.map(param => (
       <div key={param} className="flex-row input-section">
         <label htmlFor={param}>{param}: </label>
@@ -181,13 +185,10 @@ const MailTo = () => {
   return (
     <>
       <Head>
-        <title>Mailto builder</title>
+        <title>{metaTitle}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <meta
-          name="description"
-          content="Template FULL emails in an html mailto. We do the hard work to encode your to, subject, body, for easy emails using special characters and emojis!"
-        />
+        <meta name="description" content={metaDescription} />
 
         <meta
           name="keywords"
@@ -195,31 +196,22 @@ const MailTo = () => {
         />
 
         {/* <!-- Google / Search Engine Tags --> */}
-        <meta itemProp="name" content="Mailto builder" />
-        <meta
-          itemProp="description"
-          content="Template FULL emails in an html mailto. We do the hard work to encode your to, subject, body, for easy emails using special characters and emojis!"
-        />
-        <meta itemProp="image" content="https://mailto.now.sh/demo.png" />
+        <meta itemProp="name" content={metaTitle} />
+        <meta itemProp="description" content={metaDescription} />
+        <meta itemProp="image" content={metaImage} />
 
         {/* <!-- Facebook Meta Tags --> */}
         <meta property="og:url" content="https://mailto.now.sh" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content="Mailto builder" />
-        <meta
-          property="og:description"
-          content="Template FULL emails in an html mailto. We do the hard work to encode your to, subject, body, for easy emails using special characters and emojis!"
-        />
-        <meta property="og:image" content="https://mailto.now.sh/demo.png" />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:image" content={metaImage} />
 
         {/* <!-- Twitter Meta Tags --> */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="Mailto builder" />
-        <meta
-          name="twitter:description"
-          content="Template FULL emails in an html mailto. We do the hard work to encode your to, subject, body, for easy emails using special characters and emojis!"
-        />
-        <meta name="twitter:image" content="https://mailto.now.sh/demo.png" />
+        <meta name="twitter:title" content={metaTitle} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content={metaImage} />
 
         <link
           href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap"
@@ -259,13 +251,12 @@ const MailTo = () => {
               </span>
             </h1>
             <p className="description">
-              HTML <code>mailto</code>
-              {`'s made easy 👌`}
+              The <code>mailto</code> encoder
             </p>
           </WindowTopAndBottom>
 
           <div className="input-body">
-            <div className="inputs">{buildInputs()}</div>
+            <div className="inputs">{encodInputs()}</div>
           </div>
           {isFormEdited && (
             <WindowTopAndBottom>
