@@ -5,7 +5,7 @@ import {
   FaTrash,
   FaClipboard,
   FaClipboardCheck,
-  FaExternalLinkAlt
+  FaExternalLinkAlt,
 } from 'react-icons/fa';
 import styled from 'styled-components';
 import { logEvent } from '../utils/analytics';
@@ -25,6 +25,7 @@ const Button = styled.button`
   border: 1px solid white;
   height: 40px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   :hover {
     cursor: pointer;
@@ -61,7 +62,7 @@ const useFormState = () => {
       case 'set':
         return {
           ...state,
-          [payload.key]: payload.value
+          [payload.key]: payload.value,
         };
     }
   };
@@ -71,10 +72,10 @@ const useFormState = () => {
     const { to, ...relevantState } = formState;
     // empty text fields should not be fed to mailto address
     const validKeys = Object.keys(relevantState).filter(
-      param => relevantState[param].length > 0
+      (param) => relevantState[param].length > 0,
     );
     const suffix = validKeys
-      .map(key => {
+      .map((key) => {
         if (formState[key]) {
           return key + '=' + encodeURIComponent(formState[key]);
         }
@@ -87,14 +88,15 @@ const useFormState = () => {
 
   return {
     formState,
-    setOneFormValue: payload => dispatch({ type: 'set', payload }),
+    setOneFormValue: (payload) => dispatch({ type: 'set', payload }),
     resetForm: () => dispatch({ type: 'reset' }),
 
     // computed values
     isFormEdited: parameters.some(
-      parameterName => formState[parameterName] !== initialState[parameterName]
+      (parameterName) =>
+        formState[parameterName] !== initialState[parameterName],
     ),
-    mailtoHref
+    mailtoHref,
   };
 };
 
@@ -105,7 +107,7 @@ const MailTo = () => {
     setOneFormValue,
     resetForm,
     isFormEdited,
-    mailtoHref
+    mailtoHref,
   } = useFormState();
 
   const handleResetState = () => {
@@ -126,14 +128,14 @@ const MailTo = () => {
   };
 
   const encodInputs = () => {
-    return parameters.map(param => (
+    return parameters.map((param) => (
       <div key={param} className="flex-row input-section">
         <label htmlFor={param}>{param}: </label>
         {param === 'body' ? (
           <textarea
             id={param}
             value={formState[param]}
-            onChange={e => handleChange(e, param)}
+            onChange={(e) => handleChange(e, param)}
             rows={4}
             className="param-input"
           />
@@ -142,7 +144,7 @@ const MailTo = () => {
             id={param}
             type="text"
             value={formState[param]}
-            onChange={e => handleChange(e, param)}
+            onChange={(e) => handleChange(e, param)}
             className="param-input"
           />
         )}
@@ -268,7 +270,7 @@ const MailTo = () => {
                   margin: '6px 24px 6px 0px',
                   borderRadius: '2px',
                   maxHeight: '120px',
-                  maxWidth: '70vw'
+                  maxWidth: '70vw',
                 }}
               >
                 <code>{mailtoHref}</code>
@@ -299,7 +301,7 @@ const MailTo = () => {
                     style={{
                       marginRight: '12px',
                       fontWeight: 900,
-                      fontSize: '18px'
+                      fontSize: '18px',
                     }}
                   >
                     {copied ? 'copied' : 'copy'}

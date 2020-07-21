@@ -1,4 +1,4 @@
-export default props => (
+export default (props) => (
   <div>
     <input type="button" {...props} />
     <style jsx>{`
