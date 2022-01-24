@@ -79,12 +79,12 @@ const useFormState = () => {
         if (formState[key]) {
           // custom replacement of newlines required because of mobile gmail rendering
           // https://github.com/dawsbot/mailto/issues/36
-          const naiveEncodedValue = formState[key]
+          const encodedValue = formState[key]
             .split('\n')
             .map((parts) => encodeURIComponent(parts))
             .join('%0D%0A');
 
-          return key + '=' + naiveEncodedValue;
+          return key + '=' + encodedValue;
         }
         return '';
       })
