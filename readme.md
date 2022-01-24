@@ -3,7 +3,7 @@ Mailto
 💌⚡️
 </h1>
 
-> Create mailto's quickly at [mailto.now.sh](https://mailto.now.sh)
+> Create mailto's quickly at [mailto.vercel.app](https://mailto.vercel.app)
 
 <br/>
 

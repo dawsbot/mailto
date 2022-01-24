@@ -13,10 +13,10 @@ import { logEvent } from '../utils/analytics';
 import Layout from '../components/layout';
 
 const primaryPink = '#fd6c6c';
-const metaTitle = 'Mailto.now.sh | The mailto encoder';
+const metaTitle = 'Mailto | The mailto encoder';
 const metaDescription =
-  'Encode full emails as a mailto. We do the hard work to url encode your subject and body for emails using special characters and emojis. Just paste the result in your html anchor element!';
-const metaImage = 'https://mailto.now.sh/demo.png';
+  'Encode full emails as a mailto. We do the hard work to url encode your subject and body for emails with special characters and emojis. Just paste the result in your html anchor element!';
+const metaImage = 'https://mailto.vercel.app/demo.png';
 
 const Button = styled.button`
   transition: all 0.3s ease;
@@ -77,7 +77,14 @@ const useFormState = () => {
     const suffix = validKeys
       .map((key) => {
         if (formState[key]) {
-          return key + '=' + encodeURIComponent(formState[key]);
+          // custom replacement of newlines required because of mobile gmail rendering
+          // https://github.com/dawsbot/mailto/issues/36
+          const naiveEncodedValue = formState[key]
+            .split('\n')
+            .map((parts) => encodeURIComponent(parts))
+            .join('%0D%0A');
+
+          return key + '=' + naiveEncodedValue;
         }
         return '';
       })
@@ -127,7 +134,7 @@ const MailTo = () => {
     setCopied(false);
   };
 
-  const encodInputs = () => {
+  const encodeInputs = () => {
     return parameters.map((param) => (
       <div key={param} className="flex-row input-section">
         <label htmlFor={param}>{param}: </label>
@@ -203,7 +210,7 @@ const MailTo = () => {
         <meta itemProp="image" content={metaImage} />
 
         {/* <!-- Facebook Meta Tags --> */}
-        <meta property="og:url" content="https://mailto.now.sh" />
+        <meta property="og:url" content="https://mailto.vercel.app" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content={metaTitle} />
         <meta property="og:description" content={metaDescription} />
@@ -243,7 +250,7 @@ const MailTo = () => {
         <section style={{ width: '100%' }}>
           <WindowTopAndBottom>
             <h1>
-              Mailto.now.sh{' '}
+              Mailto.vercel.app{' '}
               <span
                 role="img"
                 aria-hidden="true"
@@ -258,7 +265,7 @@ const MailTo = () => {
           </WindowTopAndBottom>
 
           <div className="input-body">
-            <div className="inputs">{encodInputs()}</div>
+            <div className="inputs">{encodeInputs()}</div>
           </div>
           {isFormEdited && (
             <WindowTopAndBottom>
