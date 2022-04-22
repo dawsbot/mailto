@@ -109,13 +109,8 @@ const useFormState = () => {
 
 const MailTo = () => {
   const [copied, setCopied] = useState(false);
-  const {
-    formState,
-    setOneFormValue,
-    resetForm,
-    isFormEdited,
-    mailtoHref,
-  } = useFormState();
+  const { formState, setOneFormValue, resetForm, isFormEdited, mailtoHref } =
+    useFormState();
 
   const handleResetState = () => {
     logEvent('reset', mailtoHref);
