@@ -1,4 +1,20 @@
 module.exports = {
+  compiler: {
+    styledComponents: true,
+  },
+
+  webpack: (config, { dev, isServer }) => {
+    // Replace React with Preact only in client production build
+    if (!dev && !isServer) {
+      Object.assign(config.resolve.alias, {
+        react: 'preact/compat',
+        'react-dom/test-utils': 'preact/test-utils',
+        'react-dom': 'preact/compat',
+      });
+    }
+
+    return config;
+  },
   env: {
     GA_TRACKING_ID: process.env.GA_TRACKING_ID,
   },
