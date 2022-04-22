@@ -1,11 +1,12 @@
 {
   "extends": [
+    "next",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:jsx-a11y/recommended",
+    "plugin:@next/next/recommended"
   ],
   "plugins": ["react", "jsx-a11y"],
-  "parser": "babel-eslint",
   "rules": {
     "react/react-in-jsx-scope": 0,
     "react/prop-types": 0,
