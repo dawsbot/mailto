@@ -92,12 +92,12 @@ export default ({ children }) => {
       `}</style>
       <Footer>
         <a
-          href="https://dawsbot.com"
+          href="https://github.com/dawsbot"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: '#fd6c6c' }}
         >
-          <Wrench /> Crafted by Dawson
+          <Wrench /> Built by Dawson
         </a>
       </Footer>
     </OuterWrapper>
