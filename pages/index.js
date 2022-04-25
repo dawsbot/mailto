@@ -1,4 +1,5 @@
 import { useState, useReducer, useMemo } from 'react';
+import { emailSeemsValid } from 'email-seems-valid';
 import Head from 'next/head';
 import copy from 'copy-to-clipboard';
 import {
@@ -56,14 +57,18 @@ const initialState = parameters.reduce((acc, param) => {
 
 const useFormState = () => {
   const reducer = (state, { type, payload }) => {
-    switch (type) {
-      case 'reset':
-        return initialState;
-      case 'set':
-        return {
-          ...state,
-          [payload.key]: payload.value,
-        };
+    if (type === 'reset') {
+      return initialState;
+    } else if (type === 'set') {
+      const { key } = payload;
+      let { value } = payload;
+      if (key === 'to') {
+        value = value.replace(/\s/g, '');
+      }
+      return {
+        ...state,
+        [key]: value,
+      };
     }
   };
   const [formState, dispatch] = useReducer(reducer, initialState);
@@ -107,6 +112,27 @@ const useFormState = () => {
   };
 };
 
+const IsToValidWarning = ({ to }) => {
+  console.log({ to });
+  if (to.length > 0) {
+    const invalidEmails = to
+      .split(',')
+      .map((email) => email.trim())
+      .filter((email) => email.length > 4 && !emailSeemsValid(email));
+    if (invalidEmails.length > 0) {
+      return invalidEmails.map((email) => {
+        return (
+          <p
+            key={email}
+            style={{ color: '#fd6c6c' }}
+          >{`"${email}" is not a valid email address`}</p>
+        );
+      });
+    }
+  }
+  return null;
+};
+
 const MailTo = () => {
   const [copied, setCopied] = useState(false);
   const { formState, setOneFormValue, resetForm, isFormEdited, mailtoHref } =
@@ -131,58 +157,63 @@ const MailTo = () => {
 
   const encodeInputs = () => {
     return parameters.map((param) => (
-      <div key={param} className="flex-row input-section">
-        <label htmlFor={param}>{param}: </label>
-        {param === 'body' ? (
-          <textarea
-            id={param}
-            value={formState[param]}
-            onChange={(e) => handleChange(e, param)}
-            rows={4}
-            className="param-input"
-          />
-        ) : (
-          <input
-            id={param}
-            type="text"
-            value={formState[param]}
-            onChange={(e) => handleChange(e, param)}
-            className="param-input"
-          />
+      <span key={param}>
+        <div key={param} className="flex-row input-section">
+          <label htmlFor={param}>{param}: </label>
+          {param === 'body' ? (
+            <textarea
+              id={param}
+              value={formState[param]}
+              onChange={(e) => handleChange(e, param)}
+              rows={4}
+              className="param-input"
+            />
+          ) : (
+            <input
+              id={param}
+              type="text"
+              value={formState[param]}
+              onChange={(e) => handleChange(e, param)}
+              className="param-input"
+            />
+          )}
+          <style jsx>{`
+            .input-section {
+              margin: 8px 0px;
+            }
+            label {
+              padding-right: 8px;
+              font-size: 16px;
+              font-weight: bold;
+            }
+            input.param-input {
+              height: 24px;
+            }
+            .param-input {
+              margin-bottom: 20px;
+              border: none;
+              border-bottom: solid 2px #c9c9c9;
+              outline: none;
+              font-size: 16px;
+              width: 100%;
+              transition: border 0.3s;
+              -webkit-appearance: none;
+            }
+            .param-input:focus {
+              transition: border 1s;
+              border-color: black;
+            }
+            textarea.param-input {
+              border: solid 2px #c9c9c9;
+              border-radius: 3px;
+              padding: 10px;
+            }
+          `}</style>
+        </div>
+        {param === 'to' && isFormEdited && (
+          <IsToValidWarning to={formState.to} />
         )}
-        <style jsx>{`
-          .input-section {
-            margin: 8px 0px;
-          }
-          label {
-            padding-right: 8px;
-            font-size: 16px;
-            font-weight: bold;
-          }
-          input.param-input {
-            height: 24px;
-          }
-          .param-input {
-            margin-bottom: 20px;
-            border: none;
-            border-bottom: solid 2px #c9c9c9;
-            outline: none;
-            font-size: 16px;
-            width: 100%;
-            transition: border 0.3s;
-            -webkit-appearance: none;
-          }
-          .param-input:focus {
-            transition: border 1s;
-            border-color: black;
-          }
-          textarea.param-input {
-            border: solid 2px #c9c9c9;
-            border-radius: 3px;
-            padding: 10px;
-          }
-        `}</style>
-      </div>
+      </span>
     ));
   };
 
