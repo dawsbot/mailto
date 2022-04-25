@@ -113,7 +113,6 @@ const useFormState = () => {
 };
 
 const IsToValidWarning = ({ to }) => {
-  console.log({ to });
   if (to.length > 0) {
     const invalidEmails = to
       .split(',')
