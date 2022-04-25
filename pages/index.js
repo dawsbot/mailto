@@ -124,7 +124,7 @@ const IsToValidWarning = ({ to }) => {
         return (
           <p
             key={email}
-            style={{ color: '#fd6c6c' }}
+            style={{ color: '#fd6c6c', marginTop: '0px', marginBottom: '26px' }}
           >{`"${email}" is not a valid email address`}</p>
         );
       });
@@ -158,7 +158,7 @@ const MailTo = () => {
   const encodeInputs = () => {
     return parameters.map((param) => (
       <span key={param}>
-        <div key={param} className="flex-row input-section">
+        <div className="flex-row input-section">
           <label htmlFor={param}>{param}: </label>
           {param === 'body' ? (
             <textarea
