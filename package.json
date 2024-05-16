@@ -6,14 +6,15 @@
   "author": "@dawsbot",
   "license": "MIT",
   "engines": {
-    "node": ">=10"
+    "node": ">=16"
   },
   "scripts": {
     "build": "next build",
     "now-build": "next build",
     "dev": "next",
     "start": "next start",
-    "test": "lint-staged && eslint ."
+    "test": "lint-staged && eslint .",
+    "prepare": "husky || true"
   },
   "dependencies": {
     "copy-to-clipboard": "^3.3.3",
@@ -44,8 +45,8 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "prettier --single-quote --write"
+    "*": [
+      "prettier --ignore-unknown --write"
     ]
   }
 }

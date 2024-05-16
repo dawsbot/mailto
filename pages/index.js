@@ -381,7 +381,8 @@ const MailTo = () => {
           section {
             border: 2px solid #fd6c6c;
             border-radius: 8px;
-            box-shadow: 0 4px 6px 0 rgba(99, 42, 42, 0.3),
+            box-shadow:
+              0 4px 6px 0 rgba(99, 42, 42, 0.3),
               0 6px 20px 0 rgba(99, 42, 42, 0.3);
           }
           .input-body {
