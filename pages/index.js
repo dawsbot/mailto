@@ -1,23 +1,23 @@
-import { useState, useReducer, useMemo } from 'react';
-import { emailSeemsValid } from 'email-seems-valid';
-import Head from 'next/head';
-import copy from 'copy-to-clipboard';
+import { useState, useReducer, useMemo } from "react";
+import { emailSeemsValid } from "email-seems-valid";
+import Head from "next/head";
+import copy from "copy-to-clipboard";
 import {
   FaTrash,
   FaClipboard,
   FaClipboardCheck,
   FaExternalLinkAlt,
-} from 'react-icons/fa';
-import styled from 'styled-components';
-import { logEvent } from '../utils/analytics';
+} from "react-icons/fa";
+import styled from "styled-components";
+import { logEvent } from "../utils/analytics";
 
-import Layout from '../components/layout';
+import Layout from "../components/layout";
 
-const primaryPink = '#fd6c6c';
-const metaTitle = 'Mailto | The mailto encoder';
+const primaryPink = "#fd6c6c";
+const metaTitle = "Mailto | The mailto encoder";
 const metaDescription =
-  'Encode full emails as a mailto. We do the hard work to url encode your subject and body for emails with special characters and emojis. Just paste the result in your html anchor element!';
-const metaImage = 'https://mailto.vercel.app/demo.png';
+  "Encode full emails as a mailto. We do the hard work to url encode your subject and body for emails with special characters and emojis. Just paste the result in your html anchor element!";
+const metaImage = "https://mailto.vercel.app/demo.png";
 
 const Button = styled.button`
   transition: all 0.3s ease;
@@ -48,22 +48,22 @@ const WindowTopAndBottom = styled.div`
     flex-direction: column;
   }
 `;
-const parameters = ['to', 'cc', 'bcc', 'subject', 'body'];
+const parameters = ["to", "cc", "bcc", "subject", "body"];
 
 const initialState = parameters.reduce((acc, param) => {
-  acc[param] = '';
+  acc[param] = "";
   return acc;
 }, {});
 
 const useFormState = () => {
   const reducer = (state, { type, payload }) => {
-    if (type === 'reset') {
+    if (type === "reset") {
       return initialState;
-    } else if (type === 'set') {
+    } else if (type === "set") {
       const { key } = payload;
       let { value } = payload;
-      if (key === 'to') {
-        value = value.replace(/\s/g, '');
+      if (key === "to") {
+        value = value.replace(/\s/g, "");
       }
       return {
         ...state,
@@ -85,23 +85,23 @@ const useFormState = () => {
           // custom replacement of newlines required because of mobile gmail rendering
           // https://github.com/dawsbot/mailto/issues/36
           const encodedValue = formState[key]
-            .split('\n')
+            .split("\n")
             .map((parts) => encodeURIComponent(parts))
-            .join('%0D%0A');
+            .join("%0D%0A");
 
-          return key + '=' + encodedValue;
+          return key + "=" + encodedValue;
         }
-        return '';
+        return "";
       })
-      .join('&');
+      .join("&");
     const mailtoHref = `mailto:${to}${suffix && `?${suffix}`}`;
     return mailtoHref;
   }, [formState]);
 
   return {
     formState,
-    setOneFormValue: (payload) => dispatch({ type: 'set', payload }),
-    resetForm: () => dispatch({ type: 'reset' }),
+    setOneFormValue: (payload) => dispatch({ type: "set", payload }),
+    resetForm: () => dispatch({ type: "reset" }),
 
     // computed values
     isFormEdited: parameters.some(
@@ -115,7 +115,7 @@ const useFormState = () => {
 const IsToValidWarning = ({ to }) => {
   if (to.length > 0) {
     const invalidEmails = to
-      .split(',')
+      .split(",")
       .map((email) => email.trim())
       .filter((email) => email.length > 4 && !emailSeemsValid(email));
     if (invalidEmails.length > 0) {
@@ -123,7 +123,7 @@ const IsToValidWarning = ({ to }) => {
         return (
           <p
             key={email}
-            style={{ color: '#fd6c6c', marginTop: '0px', marginBottom: '26px' }}
+            style={{ color: "#fd6c6c", marginTop: "0px", marginBottom: "26px" }}
           >{`"${email}" is not a valid email address`}</p>
         );
       });
@@ -138,13 +138,13 @@ const MailTo = () => {
     useFormState();
 
   const handleResetState = () => {
-    logEvent('reset', mailtoHref);
+    logEvent("reset", mailtoHref);
     setCopied(false);
     resetForm();
   };
 
   const handleCopy = () => {
-    logEvent('copy-to-clipboard', mailtoHref);
+    logEvent("copy-to-clipboard", mailtoHref);
     copy(mailtoHref);
     setCopied(true);
   };
@@ -159,7 +159,7 @@ const MailTo = () => {
       <span key={param}>
         <div className="flex-row input-section">
           <label htmlFor={param}>{param}: </label>
-          {param === 'body' ? (
+          {param === "body" ? (
             <textarea
               id={param}
               value={formState[param]}
@@ -209,7 +209,7 @@ const MailTo = () => {
             }
           `}</style>
         </div>
-        {param === 'to' && isFormEdited && (
+        {param === "to" && isFormEdited && (
           <IsToValidWarning to={formState.to} />
         )}
       </span>
@@ -272,10 +272,10 @@ const MailTo = () => {
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <Layout>
-        <section style={{ width: '100%' }}>
+        <section style={{ width: "100%" }}>
           <WindowTopAndBottom>
             <h1>
-              Mailto.vercel.app{' '}
+              Mailto.vercel.app{" "}
               <span
                 role="img"
                 aria-hidden="true"
@@ -296,13 +296,13 @@ const MailTo = () => {
             <WindowTopAndBottom>
               <div
                 style={{
-                  overflow: 'scroll',
-                  padding: '4px',
-                  backgroundColor: 'white',
-                  margin: '6px 24px 6px 0px',
-                  borderRadius: '2px',
-                  maxHeight: '120px',
-                  maxWidth: '70vw',
+                  overflow: "scroll",
+                  padding: "4px",
+                  backgroundColor: "white",
+                  margin: "6px 24px 6px 0px",
+                  borderRadius: "2px",
+                  maxHeight: "120px",
+                  maxWidth: "70vw",
                 }}
               >
                 <code>{mailtoHref}</code>
@@ -314,14 +314,14 @@ const MailTo = () => {
                 </Button>
                 <a
                   href={mailtoHref}
-                  onClick={() => logEvent('open-mail-client', mailtoHref)}
+                  onClick={() => logEvent("open-mail-client", mailtoHref)}
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Open a test email in your default mail client"
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                 >
                   <Button>
-                    <span style={{ marginRight: '12px' }}>test</span>
+                    <span style={{ marginRight: "12px" }}>test</span>
                     <FaExternalLinkAlt />
                   </Button>
                 </a>
@@ -331,12 +331,12 @@ const MailTo = () => {
                 >
                   <span
                     style={{
-                      marginRight: '12px',
+                      marginRight: "12px",
                       fontWeight: 900,
-                      fontSize: '18px',
+                      fontSize: "18px",
                     }}
                   >
-                    {copied ? 'copied' : 'copy'}
+                    {copied ? "copied" : "copy"}
                   </span>
                   {copied ? <FaClipboardCheck /> : <FaClipboard />}
                 </Button>

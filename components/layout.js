@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
-import GHCorner from 'react-github-corner';
-import styled from 'styled-components';
-import { FaWrench } from 'react-icons/fa';
+import { useEffect } from "react";
+import GHCorner from "react-github-corner";
+import styled from "styled-components";
+import { FaWrench } from "react-icons/fa";
 
-import { initGA, logPageView } from '../utils/analytics';
+import { initGA, logPageView } from "../utils/analytics";
 
 const Footer = styled.footer`
   padding-top: 120px;
@@ -39,7 +39,7 @@ export default ({ children }) => {
       <GHCorner
         href="https://github.com/dawsbot/mailto"
         bannerColor="#FD6C6C"
-        size={'calc(14vw + 20px)'}
+        size={"calc(14vw + 20px)"}
       />
       {children}
       <style jsx global>{`
@@ -51,7 +51,7 @@ export default ({ children }) => {
         textarea,
         button,
         input {
-          font-family: 'Courier Prime', monospace;
+          font-family: "Courier Prime", monospace;
           font-size: 16px;
         }
 
@@ -95,7 +95,7 @@ export default ({ children }) => {
           href="https://github.com/dawsbot"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: '#fd6c6c' }}
+          style={{ color: "#fd6c6c" }}
         >
           <Wrench /> Built by Dawson
         </a>
