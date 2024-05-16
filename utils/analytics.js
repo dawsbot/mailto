@@ -1,8 +1,8 @@
 /* eslint-disable */
 import ReactGA from 'react-ga';
 export const initGA = () => {
-  console.log('initGA with id ', process.env.GA_TRACKING_ID);
-  ReactGA.initialize(process.env.GA_TRACKING_ID);
+  console.log('initGA with id ', process.env.NEXT_PUBLIC_GA_TRACKING_ID);
+  ReactGA.initialize(process.env.NEXT_PUBLIC_GA_TRACKING_ID);
 };
 export const logPageView = () => {
   console.log('logging page view');
