@@ -3,14 +3,14 @@
     "next",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:@next/next/recommended"
+    "plugin:jsx-a11y/recommended"
   ],
   "plugins": ["react", "jsx-a11y"],
   "rules": {
     "react/react-in-jsx-scope": 0,
     "react/prop-types": 0,
-    "react/display-name": 0
+    "react/display-name": 0,
+    "react/no-unknown-property": 0
   },
   "globals": {
     "React": true
