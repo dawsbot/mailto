@@ -13,8 +13,9 @@
     "now-build": "next build",
     "dev": "next",
     "start": "next start",
-    "test": "lint-staged && eslint .",
-    "prepare": "husky || true"
+    "test": "lint-staged && eslint . && vitest run",
+    "prepare": "husky || true",
+    "test:unit": "vitest run"
   },
   "dependencies": {
     "copy-to-clipboard": "^3.3.3",
@@ -37,7 +38,8 @@
     "eslint-plugin-react": "^7.34.1",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
-    "prettier": "^3.2.5"
+    "prettier": "^3.2.5",
+    "vitest": "^4.1.10"
   },
   "lint-staged": {
     "*": [
