@@ -1,9 +1,6 @@
-import { useEffect } from "react";
 import GHCorner from "react-github-corner";
 import styled from "styled-components";
 import { FaWrench } from "react-icons/fa";
-
-import { initGA, logPageView } from "../utils/analytics";
 
 const Footer = styled.footer`
   padding-top: 120px;
@@ -25,15 +22,6 @@ const Wrench = styled(FaWrench)`
 `;
 
 export default ({ children }) => {
-  useEffect(() => {
-    /* eslint-disable */
-    if (!window.GA_INITIALIZED) {
-      initGA();
-      window.GA_INITIALIZED = true;
-    }
-    /* eslint-enable */
-    logPageView();
-  }, []);
   return (
     <OuterWrapper>
       <GHCorner
