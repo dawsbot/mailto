@@ -17,13 +17,13 @@
     "prepare": "husky || true"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "copy-to-clipboard": "^3.3.3",
     "email-seems-valid": "^0.0.12",
     "next": "^14.2.3",
     "preact": "^10.22.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-ga": "^3.3.1",
     "react-github-corner": "^2.5.0",
     "react-icons": "^5.2.1",
     "styled-components": "^6.1.11"
