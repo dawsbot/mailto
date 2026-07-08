@@ -1,6 +1,7 @@
-import { useState, useReducer, useMemo } from "react";
+import { useState, useReducer, useMemo, useEffect, useRef } from "react";
 import { emailSeemsValid } from "email-seems-valid";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import copy from "copy-to-clipboard";
 import {
   FaTrash,
@@ -10,6 +11,7 @@ import {
 } from "react-icons/fa";
 import styled from "styled-components";
 import { logEvent } from "../utils/analytics";
+import { buildMailtoHref, parameters } from "../utils/buildMailtoHref";
 
 import Layout from "../components/layout";
 
@@ -48,8 +50,6 @@ const WindowTopAndBottom = styled.div`
     flex-direction: column;
   }
 `;
-const parameters = ["to", "cc", "bcc", "subject", "body"];
-
 const initialState = parameters.reduce((acc, param) => {
   acc[param] = "";
   return acc;
@@ -69,39 +69,22 @@ const useFormState = () => {
         ...state,
         [key]: value,
       };
+    } else if (type === "hydrate") {
+      return {
+        ...state,
+        ...payload,
+      };
     }
   };
   const [formState, dispatch] = useReducer(reducer, initialState);
 
-  const mailtoHref = useMemo(() => {
-    const { to, ...relevantState } = formState;
-    // empty text fields should not be fed to mailto address
-    const validKeys = Object.keys(relevantState).filter(
-      (param) => relevantState[param].length > 0,
-    );
-    const suffix = validKeys
-      .map((key) => {
-        if (formState[key]) {
-          // custom replacement of newlines required because of mobile gmail rendering
-          // https://github.com/dawsbot/mailto/issues/36
-          const encodedValue = formState[key]
-            .split("\n")
-            .map((parts) => encodeURIComponent(parts))
-            .join("%0D%0A");
-
-          return key + "=" + encodedValue;
-        }
-        return "";
-      })
-      .join("&");
-    const mailtoHref = `mailto:${to}${suffix && `?${suffix}`}`;
-    return mailtoHref;
-  }, [formState]);
+  const mailtoHref = useMemo(() => buildMailtoHref(formState), [formState]);
 
   return {
     formState,
     setOneFormValue: (payload) => dispatch({ type: "set", payload }),
     resetForm: () => dispatch({ type: "reset" }),
+    hydrateForm: (payload) => dispatch({ type: "hydrate", payload }),
 
     // computed values
     isFormEdited: parameters.some(
@@ -110,6 +93,56 @@ const useFormState = () => {
     ),
     mailtoHref,
   };
+};
+
+// Syncs form state with the URL query string so a pre-filled form can be
+// shared as a link: reads ?to=&cc=&bcc=&subject=&body= once on load to
+// pre-fill, then mirrors edits back into the URL (debounced, shallow
+// replace so typing never navigates or spams the history stack).
+const useShareableUrl = (formState, hydrateForm) => {
+  const router = useRouter();
+  const routerRef = useRef(router);
+  routerRef.current = router;
+  const hasHydratedFromUrl = useRef(false);
+
+  useEffect(() => {
+    if (!router.isReady || hasHydratedFromUrl.current) {
+      return;
+    }
+    hasHydratedFromUrl.current = true;
+    const fromQuery = {};
+    parameters.forEach((param) => {
+      const value = router.query[param];
+      if (typeof value === "string" && value.length > 0) {
+        // mirror the same whitespace-stripping the "to" input applies
+        fromQuery[param] = param === "to" ? value.replace(/\s/g, "") : value;
+      }
+    });
+    if (Object.keys(fromQuery).length > 0) {
+      hydrateForm(fromQuery);
+    }
+  }, [router.isReady, router.query, hydrateForm]);
+
+  useEffect(() => {
+    // don't overwrite the query string before it has been read on load
+    if (!hasHydratedFromUrl.current) {
+      return;
+    }
+    const timeout = setTimeout(() => {
+      const query = {};
+      parameters.forEach((param) => {
+        if (formState[param]) {
+          query[param] = formState[param];
+        }
+      });
+      routerRef.current.replace(
+        { pathname: routerRef.current.pathname, query },
+        undefined,
+        { shallow: true },
+      );
+    }, 250);
+    return () => clearTimeout(timeout);
+  }, [formState]);
 };
 
 const IsToValidWarning = ({ to }) => {
@@ -134,8 +167,15 @@ const IsToValidWarning = ({ to }) => {
 
 const MailTo = () => {
   const [copied, setCopied] = useState(false);
-  const { formState, setOneFormValue, resetForm, isFormEdited, mailtoHref } =
-    useFormState();
+  const {
+    formState,
+    setOneFormValue,
+    resetForm,
+    hydrateForm,
+    isFormEdited,
+    mailtoHref,
+  } = useFormState();
+  useShareableUrl(formState, hydrateForm);
 
   const handleResetState = () => {
     logEvent("reset", mailtoHref);
